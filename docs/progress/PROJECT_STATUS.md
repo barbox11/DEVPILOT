@@ -3,89 +3,117 @@
 _Updated: 2026-08-12_
 
 ## Current phase
-Phase 1 complete — Project setup. Monorepo scaffolded, docs + architecture defined, verified.
+
+Phase 2 complete — Design system + Identity + Landing. Phase 3 next (dashboard shell / data model / auth).
 
 ## Overall progress
-~10%
+
+~20%
 
 ## Completed
-- Repository initialized (git init, branch `main`), `.gitignore` global
-- Monorepo npm workspaces (apps/*, packages/*) + root scripts
-- `apps/web` — Next.js 15.5.23 (App Router, src/, Tailwind v4, ESLint flat, alias @/*) + placeholder layout/page + CSS tokens
-- `apps/api` — Express 4.22 + TypeScript ESM strict + error middleware + Prisma 6 schema placeholder (HealthCheck) + `/api/health`
-- Docs: ARCHITECTURE.md, DEPLOYMENT.md, DATABASE.md, PROJECT_STATUS.md, ai-handoff 001
-- Verification: install/build/lint/typecheck exit 0 (ambos workspaces); smoke test health 200
+
+- Phase 1: monorepo (Next.js 15 web + Express api + Prisma), docs, verified green (commit b293b1f)
+- Phase 2: design system + full landing
+  - Identity "Diagnostic specification": paper palette (light) + instrument-console dark tokens (.dark, dormant)
+  - Fonts: JetBrains Mono (display/labels) + IBM Plex Sans (body), self-hosted via next/font
+  - Landing: Navbar, Hero (signature CodePanel with scan line), Trust, Problem, Solution (SCAN→REPORT→FIX→VERIFY), Features, HowItWorks, AICapabilities, Security, Workflow, CTA, Footer
+  - Components: Container, Eyebrow, Button (twMerge), SectionHeading, CodePanel, plus cn() with tailwind-merge
+  - CSS: tokens, bg-grid blueprint utility, scan animation (reduced-motion aware)
+  - Design system persisted in design-system/devpilot/ (MASTER + pages/landing override)
+  - Review loop: 3 tasks, 3 fix rounds (dark tokens scoping, chip contrast ≥4.5:1, CTA cascade CRITICAL via twMerge), final review clean (minors: 2 fixed — code panel mobile overflow, trust reuses Eyebrow; rest parked)
+  - Phase 2 cerrada: prettier format run, dead nav anchors corregidos (SCAN/REPORT/FIX/VERIFY → pasos de Solution), cta.tsx colapsado corregido, `__pycache__/` gitignored, build/lint/typecheck re-verificados verde
 
 ## In progress
-- Nothing. Awaiting next phase decision (design system vs data model).
+
+- Commit de la Fase 2 pendiente (ya revisada y verde).
 
 ## Pending
-- Neon connection + first migrations (blocked on credentials)
+
+- Dashboard shell (Overview, Projects, Issues, Security, Testing, Architecture, AI Review, Activity, Settings)
+- Data model + Prisma schema full design; auth
+- Neon connection + migrations (blocked on credentials)
 - Vercel + GitHub setup (blocked on credentials/repo)
-- Design system (palette/fonts) con UI UX Pro Max + Frontend Design
-- Landing page + Dashboard shell
-- Data model + Prisma schema finalization
-- Auth (Phase 3+)
+- Testing infra (Vitest + Playwright)
+- Navbar `#report/#fix/#verify` anchors → corregidos: ahora apuntan a los pasos SCAN/REPORT/FIX/VERIFY de la sección Solution
 
 ## Blocked
-- Nothing currently. Credential-gated steps pause at the boundary and request real values.
+
+- DB/deploy steps pause for credentials. Design/dashboard phases can proceed independently.
 
 ## Problems
-- create-next-app genera Next 16 hoy; stack acordado es Next 15 → anclado a 15.5.23.
-- `npm audit`: 3 advisories high transitivos (postcss/sharp dentro de next@15). Fix = `audit fix --force` → Next 16 (breaking). En seguimiento, no forzado.
+
+- create-next-app généra Next 16 → anclado Next 15.5.23.
+- npm audit: 3 advisories high transitivos en next@15 (postcss/sharp); fix = Next 16 breaking → seguimiento.
+- Tailwind v4 orden CSS → overrides perdían cascada (CTA). Resuelto con tailwind-merge en cn().
 
 ## Solutions
-- `!.env.example` añadido en apps/web/.gitignore para que el template de env se versionee.
-- `@eslint/eslintrc` declarado explícitamente como devDependency.
-- `errorHandler` enmascara mensajes >=500 en producción (log real server-side).
+
+- twMerge garantiza overrides last-wins (verificado en HTML renderizado).
+- Chips de severidad usan tokens strong (#0a6d60 / #9c4f0b) → contraste ≥4.5:1.
+- Tokens dark bajo clase `.dark` (inactivos hasta dashboard).
 
 ## Decisions
-- Monorepo npm workspaces (Turborepo evaluable más adelante si build escala lento).
-- Next 15 estable (no 16). API en ESM con imports `*.js` (NodeNext). Prisma en `apps/api`.
-- Migraciones diferidas hasta tener Neon real. Paquete `packages/shared` diferido.
+
+- Identidad "spec sheet" light para landing; dark "instrumento" para dashboard (misma familia de acentos).
+- Sin librería de iconos: SVGs inline stroke-1.5. Sin Turborepo todavía.
+- Sin librería de animación: CSS keyframes con prefers-reduced-motion.
+- Ctrl. final: docs agree con landing.md; MASTER.md genérico explícitamente overrideado.
 
 ## Credentials required
-- NEON: `DATABASE_URL`, `DATABASE_URL_UNPOOLED` — PENDING (pedir antes de cablear DB).
-- VERCEL: Project ID / Org ID / Token — PENDING (a tiempo de deploy).
-- GITHUB: remote + token — PENDING.
+
+- NEON: `DATABASE_URL`, `DATABASE_URL_UNPOOLED` — PENDING
+- VERCEL: Project ID / Org ID / Token — PENDING
+- GITHUB: remote + token — PENDING
 
 ## Environment configuration
+
 - Node v22.16.0, npm 11.14.1, git 2.45.2, Python 3.12.10. Windows / PowerShell 5.1.
 
 ## Database status
-- Prisma 6 schema placeholder creado (`HealthCheck`), `prisma generate` OK local.
-- Conexión/migraciones/índices: pending credenciales Neon.
+
+- Prisma schema placeholder (`HealthCheck`), generate OK. Migraciones pending credenciales Neon.
 
 ## Backend status
-- Express scaffold completo: /api/health OK, error middleware global, cors, ESM strict. Build/lint/typecheck clean.
+
+- Express scaffold green (/api/health, error middleware, ESM strict). Sin features de negocio aún.
 
 ## Frontend status
-- Next.js scaffold completo, build estático OK. Placeholder page. Design system pendiente.
+
+- Landing completa y verde (build/lint/typecheck). Design system aplicado. Dashboard pendiente.
 
 ## Testing status
-- No iniciado. Plan: Vitest (unit) + Playwright (E2E). Script `test` placeholder (vitest sin dep — cablear en fase testing).
+
+- No iniciado. Plan: Vitest + Playwright. Script `test` placeholder (vitest sin dep). Playwright no instalado.
 
 ## Deployment status
-- Plan documentado (DEPLOYMENT.md). No configurado.
+
+- Plan en DEPLOYMENT.md. No configurado.
 
 ## Vercel status
-- Not configured. Env vars por entorno (Dev/Preview/Prod) a definir.
+
+- Not configured.
 
 ## Neon status
-- Not configured. Branches: dev / test / main.
+
+- Not configured.
 
 ## GitHub status
-- Not configured. Sin remote todavía.
+
+- Not configured.
 
 ## Security status
-- Env files gitignored; `.env.example` versionados como templates; error middleware enmascara internos en prod; frontend sin acceso a DB.
+
+- Env gitignored; `.env.example` templates versionados; error API enmascara >=500 en prod; frontend sin acceso a DB; sin secrets en código.
 
 ## Documentation status
-- ARCHITECTURE.md, DEPLOYMENT.md, DATABASE.md, PROJECT_STATUS.md, ai-handoff/001. En mantenimiento continuo.
+
+- ARCHITECTURE, DEPLOYMENT, DATABASE, PROJECT_STATUS, ai-handoff 001 (setup) + 002 (design system/landing por crear). design-system/devpilot persistido.
 
 ## Next tasks
-1. Decidir orden: Fase 2 (design system + landing) o Fase datos (modelo Prisma).
-2. Solicitar credenciales Neon / Vercel / GitHub al llegar el punto de conexión.
+
+1. Decidir orden: Dashboard shell (Fase 3 frontend) vs modelo de datos Prisma completo vs auth.
+2. Pedir credenciales Neon/Vercel/GitHub al llegar al punto de conexión.
 
 ## Recommended next step
-Fase 2 — Sistema de diseño e identidad visual con UI UX Pro Max + Frontend Design (no usar diseño genérico), o cablear Neon si llegan credenciales. También pendiente: commit inicial de la Fase 1.
+
+Fase 3: dashboard shell con la identidad dark de "instrumento" (aplicar clase .dark), o modelo de datos Prisma si se prioriza backend. Commit de Fase 2 siguiente (revisada, verde).

@@ -1,18 +1,158 @@
 @import "tailwindcss";
 
+@theme inline {
+  --color-background: var(--color-bg);
+  --color-surface: var(--color-surface);
+  --color-surface-2: var(--color-surface-2);
+  --color-text: var(--color-text);
+  --color-text-muted: var(--color-text-muted);
+  --color-border: var(--color-border);
+  --color-grid-line: var(--color-grid-line);
+  --color-accent-pass: var(--color-accent-pass);
+  --color-accent-pass-strong: var(--color-accent-pass-strong);
+  --color-accent-pass-soft: var(--color-accent-pass-soft);
+  --color-accent-finding: var(--color-accent-finding);
+  --color-accent-finding-strong: var(--color-accent-finding-strong);
+  --color-accent-finding-soft: var(--color-accent-finding-soft);
+  --color-ink: var(--color-ink);
+  --color-on-ink: var(--color-on-ink);
+  --font-sans: var(--font-sans);
+  --font-mono: var(--font-mono);
+  --radius-xs: var(--radius-xs);
+  --radius-sm: var(--radius-sm);
+  --radius-md: var(--radius-md);
+  --radius-lg: var(--radius-lg);
+  --shadow-sm: var(--shadow-sm);
+  --shadow-md: var(--shadow-md);
+  --shadow-lg: var(--shadow-lg);
+}
+
+@theme {
+  --spacing-1: 0.25rem;
+  --spacing-2: 0.5rem;
+  --spacing-3: 0.75rem;
+  --spacing-4: 1rem;
+  --spacing-6: 1.5rem;
+  --spacing-8: 2rem;
+  --spacing-12: 3rem;
+  --spacing-16: 4rem;
+  --spacing-24: 6rem;
+  --spacing-32: 8rem;
+  --spacing-48: 12rem;
+  --spacing-64: 16rem;
+  --spacing-96: 24rem;
+}
+
 :root {
-  --color-bg: #ffffff;
-  --color-surface: #f4f4f5;
-  --color-text: #18181b;
-  --color-text-muted: #71717a;
-  --color-accent: #2563eb;
-  --color-border: #e4e4e7;
-  --font-sans: ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji",
-    "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+  --color-bg: #fafaf7;
+  --color-surface: #ffffff;
+  --color-surface-2: #f0f0e9;
+  --color-text: #16161a;
+  --color-text-muted: #5d5d66;
+  --color-border: #ddddcd;
+  --color-grid-line: rgba(22, 22, 26, 0.055);
+  --color-accent-pass: #0e9f8a;
+  --color-accent-pass-strong: #0a6d60;
+  --color-accent-pass-soft: rgba(14, 159, 138, 0.12);
+  --color-accent-finding: #c2650e;
+  --color-accent-finding-strong: #9c4f0b;
+  --color-accent-finding-soft: rgba(194, 101, 14, 0.12);
+  --color-ink: #16161a;
+  --color-on-ink: #fafaf7;
+  --radius-xs: 4px;
+  --radius-sm: 6px;
+  --radius-md: 8px;
+  --radius-lg: 12px;
+  --shadow-sm: 0 1px 2px rgba(22, 22, 26, 0.06);
+  --shadow-md: 0 2px 8px rgba(22, 22, 26, 0.08);
+  --shadow-lg: 0 8px 24px rgba(22, 22, 26, 0.1);
+  --font-sans: "IBM Plex Sans", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+}
+
+.dark {
+    --color-bg: #0b1020;
+    --color-surface: #121830;
+    --color-surface-2: #1a2338;
+    --color-text: #e7ecf8;
+    --color-text-muted: #93a0c0;
+    --color-border: #232e4d;
+    --color-grid-line: rgba(231, 236, 248, 0.05);
+    --color-accent-pass: #2bb3a3;
+    --color-accent-pass-strong: #3ecfb8;
+    --color-accent-pass-soft: rgba(43, 179, 163, 0.14);
+    --color-accent-finding: #f0a53c;
+    --color-accent-finding-strong: #ffb25e;
+    --color-accent-finding-soft: rgba(240, 165, 60, 0.14);
+    --color-ink: #e7ecf8;
+    --color-on-ink: #0b1020;
 }
 
 body {
   background: var(--color-bg);
   color: var(--color-text);
   font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+::selection {
+  background-color: var(--color-accent-pass-soft);
+  color: var(--color-ink);
+}
+
+:focus-visible {
+  outline: 3px solid var(--color-ink);
+  outline-offset: 3px;
+}
+
+@utility bg-grid {
+  background-image: repeating-linear-gradient(
+      to right,
+      var(--color-grid-line) 0 1px,
+      transparent 1px 32px
+    ),
+    repeating-linear-gradient(
+      to bottom,
+      var(--color-grid-line) 0 1px,
+      transparent 1px 32px
+    );
+  background-size: 32px 32px;
+  -webkit-mask-image: radial-gradient(ellipse at center, black 40%, transparent 75%);
+  mask-image: radial-gradient(ellipse at center, black 40%, transparent 75%);
+}
+
+@keyframes devpilot-scan {
+  0% {
+    top: 0;
+    opacity: 0;
+  }
+  4% {
+    opacity: 0.6;
+  }
+  92% {
+    opacity: 0.6;
+  }
+  100% {
+    top: 100%;
+    opacity: 0;
+  }
+}
+
+.scan-line {
+  height: 1px;
+  opacity: 0;
+  background: color-mix(
+    in srgb,
+    var(--color-accent-pass) 60%,
+    transparent
+  );
+  box-shadow: 0 0 12px 1px
+    color-mix(in srgb, var(--color-accent-pass) 35%, transparent);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .scan-line.animate-scan {
+    animation: devpilot-scan 6s linear infinite;
+  }
 }
