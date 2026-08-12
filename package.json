@@ -1,0 +1,27 @@
+{
+  "name": "devpilot",
+  "version": "0.1.0",
+  "private": true,
+  "description": "DevPilot — AI-assisted development platform for developers",
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
+  "scripts": {
+    "dev": "concurrently -n api,web -c blue,green \"npm:dev:api\" \"npm:dev:web\"",
+    "dev:web": "npm run dev --workspace @devpilot/web",
+    "dev:api": "npm run dev --workspace @devpilot/api",
+    "build": "npm run build --workspace @devpilot/web && npm run build --workspace @devpilot/api",
+    "lint": "npm run lint --workspace @devpilot/web && npm run lint --workspace @devpilot/api",
+    "typecheck": "npm run typecheck --workspace @devpilot/web && npm run typecheck --workspace @devpilot/api",
+    "format": "prettier --write \"**/*.{ts,tsx,js,json,md}\"",
+    "test": "npm run test --workspace @devpilot/web"
+  },
+  "devDependencies": {
+    "concurrently": "^9.1.2",
+    "prettier": "^3.4.2"
+  },
+  "engines": {
+    "node": ">=22.0.0"
+  }
+}
