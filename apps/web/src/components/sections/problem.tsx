@@ -61,36 +61,40 @@ function BeakerIssueIcon() {
 
 const ISSUES = [
   {
-    title: "Unreviewed pull requests",
-    copy: "A merge that ships without review writes a latent defect into branch history. The author was the only person who ever read it.",
+    title: "Pull requests sin revisar",
+    copy: "Un merge que se publica sin revisión escribe un defecto latente en el historial de la rama. El autor fue la única persona que lo leyó.",
     Icon: DocIssueIcon,
   },
   {
-    title: "Vulnerabilities found in prod",
-    copy: "CI passes, audits pass, and the hole still surfaces in an incident post-mortem instead of a pull-request review.",
+    title: "Vulnerabilidades en producción",
+    copy: "El CI pasa, las auditorías pasan, y el agujero aparece en el post-mortem de un incidente en lugar de en la revisión del pull request.",
     Icon: ShieldIssueIcon,
   },
   {
-    title: "Cargo-cult test coverage",
-    copy: "Coverage percentage is not correctness. A suite that never fails teaches no one about the behavior it claims to lock in.",
+    title: "Cobertura de pruebas de imitación",
+    copy: "El porcentaje de cobertura no es corrección. Una suite que nunca falla no enseña nada sobre el comportamiento que dice asegurar.",
     Icon: BeakerIssueIcon,
   },
 ];
 
 export function Problem() {
   return (
-    <section id="problem" className="scroll-mt-20 bg-background py-20 md:py-24">
+    <section
+      id="problema"
+      className="scroll-mt-20 bg-background py-20 md:py-24"
+    >
       <Container>
         <div className="grid gap-12 md:grid-cols-2 md:gap-0">
           <div className="md:pr-12 lg:pr-20">
-            <Eyebrow>THE PROBLEM</Eyebrow>
+            <Eyebrow>EL PROBLEMA</Eyebrow>
             <h2 className="mt-3 font-mono text-2xl font-semibold tracking-tight text-text md:text-3xl">
-              Breakage is rarely loud.
+              Romper rara vez hace ruido.
             </h2>
             <p className="mt-4 max-w-md text-text-muted">
-              Most damage ships quietly: a merge that never got a second look, a
-              dependency with a known hole, a test suite that proves nothing. By
-              the time anything is obvious, it is already in production.
+              La mayor parte del daño llega en silencio: un merge que nunca tuvo
+              una segunda mirada, una dependencia con un agujero conocido, una
+              suite de pruebas que no demuestra nada. Cuando algo se vuelve
+              evidente, ya está en producción.
             </p>
           </div>
           <div className="md:border-l md:border-border md:pl-12 lg:pl-20">

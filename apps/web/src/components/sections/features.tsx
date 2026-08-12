@@ -121,33 +121,33 @@ const FEATURES: Array<{
   Icon: ComponentType;
 }> = [
   {
-    title: "Project analysis",
-    desc: "Maps the whole repository — structure, flows, and dependencies — before the first finding.",
+    title: "Análisis de proyectos",
+    desc: "Mapea todo el repositorio: estructura, flujos y dependencias antes del primer hallazgo.",
     Icon: FileSearchIcon,
   },
   {
-    title: "Vulnerability detection",
-    desc: "Flags risky dependencies, unsafe patterns, and known weaknesses in context.",
+    title: "Detección de vulnerabilidades",
+    desc: "Marca dependencias riesgosas, patrones inseguros y debilidades conocidas en contexto.",
     Icon: ShieldAlertIcon,
   },
   {
-    title: "Security review",
-    desc: "A structured pass on auth, input handling, and data flow for exploitable gaps.",
+    title: "Revisión de seguridad",
+    desc: "Una pasada estructurada sobre autenticación, manejo de entradas y flujo de datos en busca de brechas explotables.",
     Icon: LockIcon,
   },
   {
-    title: "Test generation",
-    desc: "Generates tests that cover real behavior, keyed to the changes you are about to make.",
+    title: "Generación de pruebas",
+    desc: "Genera pruebas que cubren el comportamiento real, alineadas con los cambios que estás por hacer.",
     Icon: BeakerIcon,
   },
   {
-    title: "Architecture review",
-    desc: "Reads module boundaries and call graphs to surface coupling, drift, and dead ends.",
+    title: "Revisión de arquitectura",
+    desc: "Lee límites de módulos y grafos de llamadas para exponer acoplamiento, deriva y callejones sin salida.",
     Icon: LayersIcon,
   },
   {
-    title: "Documentation",
-    desc: "Keeps specs and READMEs in sync with what the code actually does today.",
+    title: "Documentación",
+    desc: "Mantiene especificaciones y READMEs en sincronía con lo que el código realmente hace hoy.",
     Icon: BookOpenIcon,
   },
 ];
@@ -155,15 +155,15 @@ const FEATURES: Array<{
 export function Features() {
   return (
     <section
-      id="features"
+      id="capacidades"
       className="scroll-mt-20 bg-background py-20 md:py-24"
     >
       <Container>
         <div className="max-w-2xl">
           <SectionHeading
-            eyebrow="CAPABILITIES"
-            title="Six passes, from structure to docs."
-            lead="Each capability reads the same mapped codebase, so findings stay consistent and grounded in the code rather than in guesses."
+            eyebrow="CAPACIDADES"
+            title="Seis pasadas, de la estructura a la documentación."
+            lead="Cada capacidad lee el mismo código mapeado, por lo que los hallazgos se mantienen consistentes y fundamentados en el código, no en suposiciones."
           />
         </div>
         <ul className="mt-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">

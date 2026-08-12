@@ -16,14 +16,15 @@ const ibmPlexSans = IBM_Plex_Sans({
 
 export const metadata: Metadata = {
   title: "DevPilot",
-  description: "AI-assisted development platform for developers.",
+  description:
+    "Plataforma de asistencia con IA para desarrolladores: analiza código, detecta errores y vulnerabilidades, revisa calidad y arquitectura.",
 };
 
 export default function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="en">
+    <html lang="es">
       <body
         className={`${jetbrainsMono.variable} ${ibmPlexSans.variable} antialiased`}
       >

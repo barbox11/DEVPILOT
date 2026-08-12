@@ -33,7 +33,7 @@ const BEFORE_LINES: CodeLine[] = [
     severity: "finding",
     content: (
       <span className="text-text">
-        {"  return data; // res.ok never checked"}
+        {"  return data; // res.ok nunca se comprueba"}
       </span>
     ),
   },
@@ -87,30 +87,30 @@ const AFTER_LINES: CodeLine[] = [
 export function Workflow() {
   return (
     <section
-      id="workflow"
+      id="flujo-de-trabajo"
       className="scroll-mt-20 bg-background py-20 md:py-24"
     >
       <Container>
         <div className="max-w-2xl">
           <SectionHeading
-            eyebrow="DEV WORKFLOW"
-            title="From finding to applied fix, in one loop."
-            lead="The loop does not end at the scan. The fix is drafted, applied to the branch, and verified before you merge."
+            eyebrow="FLUJO DE DESARROLLO"
+            title="Del hallazgo a la corrección aplicada, en un solo bucle."
+            lead="El bucle no termina en el escaneo. La corrección se redacta, se aplica a la rama y se verifica antes de fusionar."
           />
         </div>
         <div className="mt-12 grid gap-8 md:grid-cols-2">
           <CodePanel
-            title="before.ts"
+            title="antes.ts"
             status="finding"
             scanning={false}
-            caption="before: unchecked mutation · no tests"
+            caption="antes: mutación sin comprobar · sin pruebas"
             lines={BEFORE_LINES}
           />
           <CodePanel
-            title="after.ts"
+            title="despues.ts"
             status="pass"
             scanning={false}
-            caption="applied: 1 fix · test added"
+            caption="aplicado: 1 corrección · prueba añadida"
             lines={AFTER_LINES}
           />
         </div>

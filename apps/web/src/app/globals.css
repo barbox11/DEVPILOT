@@ -71,21 +71,21 @@
 }
 
 .dark {
-    --color-bg: #0b1020;
-    --color-surface: #121830;
-    --color-surface-2: #1a2338;
-    --color-text: #e7ecf8;
-    --color-text-muted: #93a0c0;
-    --color-border: #232e4d;
-    --color-grid-line: rgba(231, 236, 248, 0.05);
-    --color-accent-pass: #2bb3a3;
-    --color-accent-pass-strong: #3ecfb8;
-    --color-accent-pass-soft: rgba(43, 179, 163, 0.14);
-    --color-accent-finding: #f0a53c;
-    --color-accent-finding-strong: #ffb25e;
-    --color-accent-finding-soft: rgba(240, 165, 60, 0.14);
-    --color-ink: #e7ecf8;
-    --color-on-ink: #0b1020;
+  --color-bg: #0b1020;
+  --color-surface: #121830;
+  --color-surface-2: #1a2338;
+  --color-text: #e7ecf8;
+  --color-text-muted: #93a0c0;
+  --color-border: #232e4d;
+  --color-grid-line: rgba(231, 236, 248, 0.05);
+  --color-accent-pass: #2bb3a3;
+  --color-accent-pass-strong: #3ecfb8;
+  --color-accent-pass-soft: rgba(43, 179, 163, 0.14);
+  --color-accent-finding: #f0a53c;
+  --color-accent-finding-strong: #ffb25e;
+  --color-accent-finding-soft: rgba(240, 165, 60, 0.14);
+  --color-ink: #e7ecf8;
+  --color-on-ink: #0b1020;
 }
 
 body {
@@ -107,7 +107,8 @@ body {
 }
 
 @utility bg-grid {
-  background-image: repeating-linear-gradient(
+  background-image:
+    repeating-linear-gradient(
       to right,
       var(--color-grid-line) 0 1px,
       transparent 1px 32px
@@ -118,7 +119,11 @@ body {
       transparent 1px 32px
     );
   background-size: 32px 32px;
-  -webkit-mask-image: radial-gradient(ellipse at center, black 40%, transparent 75%);
+  -webkit-mask-image: radial-gradient(
+    ellipse at center,
+    black 40%,
+    transparent 75%
+  );
   mask-image: radial-gradient(ellipse at center, black 40%, transparent 75%);
 }
 
@@ -142,11 +147,7 @@ body {
 .scan-line {
   height: 1px;
   opacity: 0;
-  background: color-mix(
-    in srgb,
-    var(--color-accent-pass) 60%,
-    transparent
-  );
+  background: color-mix(in srgb, var(--color-accent-pass) 60%, transparent);
   box-shadow: 0 0 12px 1px
     color-mix(in srgb, var(--color-accent-pass) 35%, transparent);
 }

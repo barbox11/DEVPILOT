@@ -2,13 +2,19 @@ import Link from "next/link";
 import Container from "@/components/container";
 
 const COLUMNS = [
-  { heading: "Product", links: ["Scan", "Report", "Fix", "Verify"] },
   {
-    heading: "Resources",
-    links: ["Documentation", "API reference", "Changelog", "Status"],
+    heading: "Producto",
+    links: ["Escanear", "Informe", "Corregir", "Verificar"],
   },
-  { heading: "Company", links: ["About", "Careers", "Blog", "Contact"] },
-  { heading: "Legal", links: ["Privacy", "Terms", "Security", "DPA"] },
+  {
+    heading: "Recursos",
+    links: ["Documentación", "Referencia de API", "Cambios", "Estado"],
+  },
+  {
+    heading: "Empresa",
+    links: ["Acerca de", "Carreras", "Blog", "Contacto"],
+  },
+  { heading: "Legal", links: ["Privacidad", "Términos", "Seguridad", "DPA"] },
 ];
 
 export function Footer() {
@@ -28,7 +34,7 @@ export function Footer() {
             </span>
           </div>
           <p className="font-mono text-xs uppercase tracking-[0.2em] text-text-muted">
-            automated inspection for modern teams
+            inspección automática para equipos modernos
           </p>
         </div>
         <div className="grid gap-10 border-t border-border py-10 sm:grid-cols-2 lg:grid-cols-4">
@@ -55,7 +61,7 @@ export function Footer() {
         <div className="flex flex-col gap-2 border-t border-border py-8 font-mono text-xs text-text-muted sm:flex-row sm:items-center sm:justify-between">
           <span>© 2026 DevPilot</span>
           <span className="uppercase tracking-[0.2em]">
-            inspected: every merge, before it lands
+            inspeccionado: cada merge, antes de llegar
           </span>
         </div>
       </Container>

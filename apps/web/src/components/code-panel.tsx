@@ -18,26 +18,26 @@ const chipClasses = "rounded px-1.5 py-0.5 font-mono text-xs font-semibold";
 
 const statusChip = {
   pass: {
-    label: "PASS",
+    label: "OK",
     className: "bg-accent-pass-soft text-accent-pass-strong",
   },
   finding: {
-    label: "FIND",
+    label: "HALLAZGO",
     className: "bg-accent-finding-soft text-accent-finding-strong",
   },
 } as const;
 
 const severityChip = {
   pass: {
-    label: "PASS",
+    label: "OK",
     className: "bg-accent-pass-soft text-accent-pass-strong",
   },
   finding: {
-    label: "FIND",
+    label: "HALLAZGO",
     className: "bg-accent-finding-soft text-accent-finding-strong",
   },
   warn: {
-    label: "WARN",
+    label: "ADVERTENCIA",
     className: "bg-accent-finding-soft text-accent-finding-strong",
   },
 } as const;
@@ -78,7 +78,7 @@ const defaultLines: CodeLine[] = [
     content: tokens([
       ["  throw ", "kw"],
       ["new ", "kw"],
-      ['InvalidToken("session expired");', "pl"],
+      ['InvalidToken("sesión expirada");', "pl"],
     ]),
     severity: "finding",
   },
@@ -125,8 +125,8 @@ export function CodePanel({
 }: CodePanelProps) {
   const body = lines ?? defaultLines;
   const captionText =
-    caption ?? (lines ? undefined : "analyzing: auth.ts · 2 findings · 1 pass");
-
+    caption ??
+    (lines ? undefined : "analizando: auth.ts · 2 hallazgos · 1 correcto");
   return (
     <figure className="overflow-hidden rounded-md border border-border bg-surface font-mono text-[13px] leading-6 shadow-md">
       <div className="flex items-center gap-2 border-b border-border bg-surface-2 px-4 py-2">

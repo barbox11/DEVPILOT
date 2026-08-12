@@ -3,20 +3,20 @@ import { SectionHeading } from "@/components/section-heading";
 
 const POINTS = [
   {
-    title: "Secrets are never stored",
-    copy: "Keys and tokens are read in memory and discarded once the analysis completes.",
+    title: "Los secretos nunca se almacenan",
+    copy: "Las claves y tokens se leen en memoria y se descartan al terminar el análisis.",
   },
   {
-    title: "Encrypted in transit",
-    copy: "Traffic is TLS 1.3 end to end; payloads are protected between your repo and the analysis.",
+    title: "Cifrado en tránsito",
+    copy: "El tráfico es TLS 1.3 de extremo a extremo; las cargas se protegen entre tu repositorio y el análisis.",
   },
   {
-    title: "Isolated analyses",
-    copy: "Every repository runs in a fresh, disposable sandbox with no network egress.",
+    title: "Análisis aislados",
+    copy: "Cada repositorio se ejecuta en un sandbox nuevo y desechable, sin salida de red.",
   },
   {
-    title: "Role-based access",
-    copy: "Each teammate sees only the reports and repositories their role allows.",
+    title: "Acceso por roles",
+    copy: "Cada miembro del equipo solo ve los informes y repositorios que su rol permite.",
   },
 ];
 
@@ -39,13 +39,16 @@ function CheckIcon() {
 
 export function Security() {
   return (
-    <section id="security" className="scroll-mt-20 bg-surface-2 py-20 md:py-24">
+    <section
+      id="seguridad"
+      className="scroll-mt-20 bg-surface-2 py-20 md:py-24"
+    >
       <Container>
         <div className="grid gap-12 md:grid-cols-2 md:gap-16">
           <SectionHeading
-            eyebrow="SECURITY"
-            title="Inspection you can trust with the source."
-            lead="DevPilot is designed to touch as little as possible and keep what it sees private. The guarantees are plain, and they hold for every run."
+            eyebrow="SEGURIDAD"
+            title="Inspección en la que puedes confiar el código fuente."
+            lead="DevPilot está diseñado para tocar lo menos posible y mantener privado lo que ve. Las garantías son claras y se cumplen en cada ejecución."
           />
           <ul className="divide-y divide-border self-center">
             {POINTS.map((point) => (

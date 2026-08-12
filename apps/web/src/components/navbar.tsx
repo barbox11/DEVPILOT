@@ -7,10 +7,10 @@ import { Button } from "@/components/button";
 import { cn } from "@/lib/cn";
 
 const NAV_LINKS = [
-  { href: "#scan", label: "SCAN" },
-  { href: "#report", label: "REPORT" },
-  { href: "#fix", label: "FIX" },
-  { href: "#verify", label: "VERIFY" },
+  { href: "#escanear", label: "ESCANEAR" },
+  { href: "#informe", label: "INFORME" },
+  { href: "#corregir", label: "CORREGIR" },
+  { href: "#verificar", label: "VERIFICAR" },
 ];
 
 export default function Navbar() {
@@ -50,10 +50,10 @@ export default function Navbar() {
 
           <div className="hidden items-center gap-3 md:flex">
             <Button href="#" variant="outline" size="sm">
-              Sign in
+              Iniciar sesión
             </Button>
-            <Button href="#scan" size="sm">
-              Start analyzing
+            <Button href="#escanear" size="sm">
+              Comenzar análisis
             </Button>
           </div>
 
@@ -62,7 +62,7 @@ export default function Navbar() {
             className="inline-flex h-11 w-11 cursor-pointer items-center justify-center text-text md:hidden"
             aria-expanded={open}
             aria-controls="mobile-nav"
-            aria-label="Toggle navigation"
+            aria-label="Alternar navegación"
             onClick={() => setOpen((value) => !value)}
           >
             <svg
@@ -120,15 +120,15 @@ export default function Navbar() {
               className="w-full"
               onClick={() => setOpen(false)}
             >
-              Sign in
+              Iniciar sesión
             </Button>
             <Button
-              href="#scan"
+              href="#escanear"
               size="sm"
               className="w-full"
               onClick={() => setOpen(false)}
             >
-              Start analyzing
+              Comenzar análisis
             </Button>
           </div>
         </Container>

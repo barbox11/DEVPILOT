@@ -4,11 +4,11 @@ _Updated: 2026-08-12_
 
 ## Current phase
 
-Phase 2 complete — Design system + Identity + Landing. Phase 3 next (dashboard shell / data model / auth).
+Fase 2.5 — Landing localizada a español (commit `13dceb5` pusheado). Fase 3 next (dashboard shell / data model / auth).
 
 ## Overall progress
 
-~20%
+~22%
 
 ## Completed
 
@@ -22,10 +22,11 @@ Phase 2 complete — Design system + Identity + Landing. Phase 3 next (dashboard
   - Design system persisted in design-system/devpilot/ (MASTER + pages/landing override)
   - Review loop: 3 tasks, 3 fix rounds (dark tokens scoping, chip contrast ≥4.5:1, CTA cascade CRITICAL via twMerge), final review clean (minors: 2 fixed — code panel mobile overflow, trust reuses Eyebrow; rest parked)
   - Phase 2 cerrada: prettier format run, dead nav anchors corregidos (SCAN/REPORT/FIX/VERIFY → pasos de Solution), cta.tsx colapsado corregido, `__pycache__/` gitignored, build/lint/typecheck re-verificados verde
+- Phase 2.5 (localización): landing íntegramente en español — `lang="es"`, metadata, navbar (Iniciar sesión/Comenzar análisis), hero, las 10 secciones, footer, chips de severidad (OK/HALLAZGO/ADVERTENCIA), captions e IDs de anclas (`#escanear/#informe/#corregir/#verificar`). Verificado en HTML servido (200, textos es presentes, en ausentes). Commit `13dceb5` pusheado a `origin/main` (github.com/barbox11/DEVPILOT).
 
 ## In progress
 
-- Commit de la Fase 2 pendiente (ya revisada y verde).
+- Ninguno. En espera de dirección de la Fase 3.
 
 ## Pending
 
@@ -99,7 +100,7 @@ Phase 2 complete — Design system + Identity + Landing. Phase 3 next (dashboard
 
 ## GitHub status
 
-- Not configured.
+- Remote configurado: `origin` → `https://github.com/barbox11/DEVPILOT.git`. Commits `b293b1f` y `13dceb5` pusheados.
 
 ## Security status
 
@@ -107,13 +108,14 @@ Phase 2 complete — Design system + Identity + Landing. Phase 3 next (dashboard
 
 ## Documentation status
 
-- ARCHITECTURE, DEPLOYMENT, DATABASE, PROJECT_STATUS, ai-handoff 001 (setup) + 002 (design system/landing por crear). design-system/devpilot persistido.
+- ARCHITECTURE, DEPLOYMENT, DATABASE, PROJECT_STATUS, ai-handoff 001 (setup) + 002 (design system/landing) + 003 (localización). design-system/devpilot persistido. `/docs/api` y `/docs/testing` sin contenido aún. Falta entregar al proyecto las partes 2-10 del master prompt.
 
 ## Next tasks
 
 1. Decidir orden: Dashboard shell (Fase 3 frontend) vs modelo de datos Prisma completo vs auth.
-2. Pedir credenciales Neon/Vercel/GitHub al llegar al punto de conexión.
+2. Pedir credenciales Neon/Vercel al llegar al punto de conexión.
+3. Pedir al usuario las restantes Partes 2-10 del master prompt para validar cumplimiento completo.
 
 ## Recommended next step
 
-Fase 3: dashboard shell con la identidad dark de "instrumento" (aplicar clase .dark), o modelo de datos Prisma si se prioriza backend. Commit de Fase 2 siguiente (revisada, verde).
+Fase 3: dashboard shell con la identidad dark de "instrumento" (aplicar clase .dark), o modelo de datos Prisma si se prioriza backend.

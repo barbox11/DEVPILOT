@@ -4,35 +4,38 @@ import { SectionHeading } from "@/components/section-heading";
 const STEPS = [
   {
     tag: "1",
-    title: "Connect a repository",
-    copy: "Grant read access to a repository or push a local snapshot. Analysis never leaves the sandbox.",
+    title: "Conecta un repositorio",
+    copy: "Otorga acceso de lectura a un repositorio o sube una copia local. El análisis nunca sale del sandbox.",
   },
   {
     tag: "2",
-    title: "DevPilot analyzes",
-    copy: "Every file is read and mapped — structure, dependencies, auth paths, and test coverage.",
+    title: "DevPilot analiza",
+    copy: "Cada archivo se lee y se mapea: estructura, dependencias, rutas de autenticación y cobertura de pruebas.",
   },
   {
     tag: "3",
-    title: "Read the report",
-    copy: "Findings arrive as a spec: severity, evidence, and the reason each issue matters.",
+    title: "Lee el informe",
+    copy: "Los hallazgos llegan como especificación: severidad, evidencia y el motivo de cada problema.",
   },
   {
     tag: "4",
-    title: "Apply fixes & verify",
-    copy: "Accept the drafted fixes, regenerate tests, and watch each change verify clean.",
+    title: "Aplica correcciones y verifica",
+    copy: "Acepta las correcciones redactadas, regenera las pruebas y observa cómo cada cambio verifica limpio.",
   },
 ];
 
 export function HowItWorks() {
   return (
-    <section id="how" className="scroll-mt-20 bg-surface-2 py-20 md:py-24">
+    <section
+      id="como-funciona"
+      className="scroll-mt-20 bg-surface-2 py-20 md:py-24"
+    >
       <Container>
         <div className="max-w-2xl">
           <SectionHeading
-            eyebrow="HOW IT WORKS"
-            title="Four steps, from repository to merge."
-            lead="DevPilot is a pipeline, not a chatbot. You connect a repo, it analyzes, you read, you apply."
+            eyebrow="CÓMO FUNCIONA"
+            title="Cuatro pasos, del repositorio al merge."
+            lead="DevPilot es un pipeline, no un chatbot. Conectas un repo, analiza, lees, aplicas."
           />
         </div>
         <ol className="mt-12">

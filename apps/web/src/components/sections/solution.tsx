@@ -5,28 +5,28 @@ import { cn } from "@/lib/cn";
 
 const STEPS = [
   {
-    tag: "SCAN",
-    anchor: "scan",
+    tag: "ESCANEAR",
+    anchor: "escanear",
     color: "text-text",
-    desc: "Every file is read and mapped — structure, dependencies, and data flow.",
+    desc: "Cada archivo se lee y se mapea: estructura, dependencias y flujo de datos.",
   },
   {
-    tag: "REPORT",
-    anchor: "report",
+    tag: "INFORME",
+    anchor: "informe",
     color: "text-accent-finding-strong",
-    desc: "Findings land as a spec with severity, evidence, and the reason each matters.",
+    desc: "Los hallazgos llegan como una especificación con severidad, evidencia y el porqué de cada uno.",
   },
   {
-    tag: "FIX",
-    anchor: "fix",
+    tag: "CORREGIR",
+    anchor: "corregir",
     color: "text-accent-pass-strong",
-    desc: "Fixes are drafted against the real codebase, not a toy example.",
+    desc: "Las correcciones se redactan contra el código real, no contra un ejemplo de juguete.",
   },
   {
-    tag: "VERIFY",
-    anchor: "verify",
+    tag: "VERIFICAR",
+    anchor: "verificar",
     color: "text-accent-pass-strong",
-    desc: "Each change is re-checked and tests regenerated before you merge.",
+    desc: "Cada cambio se re-chequea y las pruebas se regeneran antes de fusionar.",
   },
 ];
 
@@ -53,13 +53,13 @@ export function Solution() {
     <section className="scroll-mt-20 bg-surface-2 py-20 md:py-24">
       <Container>
         <div className="max-w-2xl">
-          <Eyebrow>THE LOOP</Eyebrow>
+          <Eyebrow>EL BUCLE</Eyebrow>
           <h2 className="mt-3 font-mono text-2xl font-semibold tracking-tight text-text md:text-3xl">
-            Scan, report, fix, verify. Then ship.
+            Escanear, informar, corregir, verificar. Luego publicar.
           </h2>
           <p className="mt-4 text-text-muted">
-            One loop, run end to end, so the code that leaves your branch has
-            already been inspected, repaired, and re-checked.
+            Un solo bucle ejecutado de principio a fin, para que el código que
+            sale de tu rama ya haya sido inspeccionado, reparado y verificado.
           </p>
         </div>
         <div className="mt-12 grid md:grid-cols-[1fr_auto_1fr_auto_1fr_auto_1fr]">

@@ -29,7 +29,7 @@ const AI_LINES: CodeLine[] = [
       <>
         <span className="text-accent-pass-strong">+ </span>
         <span className="text-text">
-          {'test("session expires after 15m");'}
+          {'test("la sesión expira a los 15 min");'}
         </span>
       </>
     ),
@@ -37,28 +37,28 @@ const AI_LINES: CodeLine[] = [
   {
     content: (
       <span className="text-text-muted">
-        {"// why: tokens stayed valid after logout"}
+        {"// motivo: los tokens seguían válidos tras cerrar sesión"}
       </span>
     ),
   },
 ];
 
 const POINTS = [
-  "Explains why a finding matters, not just where it sits",
-  "Drafts fixes against the real codebase, imports and all",
-  "Generates tests that pass locally before you apply",
+  "Explica por qué importa un hallazgo, no solo dónde está",
+  "Redacta correcciones sobre el código real, imports incluidos",
+  "Genera pruebas que pasan localmente antes de aplicar",
 ];
 
 export function AICapabilities() {
   return (
-    <section id="ai" className="scroll-mt-20 bg-background py-20 md:py-24">
+    <section id="ia" className="scroll-mt-20 bg-background py-20 md:py-24">
       <Container>
         <div className="grid items-center gap-12 md:grid-cols-2 md:gap-16">
           <div>
             <SectionHeading
-              eyebrow="CONTEXTUAL AI"
-              title="An AI that reads the code, not the prompt."
-              lead="No chat window, no scripted answers. DevPilot reads the whole repository, explains why an issue matters, drafts the fix in context, and generates a test that proves it."
+              eyebrow="IA CONTEXTUAL"
+              title="Una IA que lee el código, no el prompt."
+              lead="Sin ventana de chat ni respuestas guionadas. DevPilot lee todo el repositorio, explica por qué importa un problema, redacta la corrección en contexto y genera una prueba que lo demuestra."
             />
             <ul className="mt-8 space-y-4">
               {POINTS.map((point) => (
@@ -78,7 +78,7 @@ export function AICapabilities() {
             title="fix-audit.ts"
             status="pass"
             scanning={false}
-            caption="suggested fix · generated test · passes locally"
+            caption="corrección sugerida · prueba generada · pasa localmente"
             lines={AI_LINES}
           />
         </div>
