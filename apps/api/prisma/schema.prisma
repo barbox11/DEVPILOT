@@ -7,7 +7,172 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model HealthCheck {
-  id        Int      @id @default(autoincrement())
-  checkedAt DateTime @default(now())
+enum UserRole {
+  OWNER
+  MEMBER
+}
+
+enum AnalysisStatus {
+  PENDING
+  RUNNING
+  COMPLETED
+  FAILED
+  CANCELLED
+}
+
+enum Severity {
+  CRITICAL
+  HIGH
+  MEDIUM
+  LOW
+}
+
+enum IssueCategory {
+  ERROR
+  SECURITY
+  QUALITY
+  TESTING
+  ARCHITECTURE
+  PERFORMANCE
+  DOCUMENTATION
+}
+
+enum IssueStatus {
+  OPEN
+  ACCEPTED
+  REJECTED
+  FIXED
+}
+
+enum TestStatus {
+  PASSED
+  FAILED
+  SKIPPED
+}
+
+model User {
+  id           String      @id @default(cuid())
+  email        String      @unique
+  name         String
+  passwordHash String
+  role         UserRole    @default(MEMBER)
+  projects     Project[]
+  sessions     Session[]
+  activity     Activity[]
+  createdAt    DateTime    @default(now())
+  updatedAt    DateTime    @updatedAt
+}
+
+model Project {
+  id            String     @id @default(cuid())
+  name          String
+  repoUrl       String?
+  defaultBranch String     @default("main")
+  ownerId       String
+  owner         User       @relation(fields: [ownerId], references: [id], onDelete: Cascade)
+  analyses      Analysis[]
+  activity      Activity[]
+  createdAt     DateTime   @default(now())
+  updatedAt     DateTime   @updatedAt
+
+  @@index([ownerId])
+}
+
+model Analysis {
+  id                String             @id @default(cuid())
+  projectId         String
+  project           Project            @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  status            AnalysisStatus     @default(PENDING)
+  branch            String?
+  commitSha         String?
+  startedAt         DateTime?
+  completedAt       DateTime?
+  healthScore       Int?
+  qualityScore      Int?
+  securityScore     Int?
+  testingScore      Int?
+  architectureScore Int?
+  issues            Issue[]
+  recommendations  Recommendation[]
+  generatedTests    GeneratedTest[]
+  activity          Activity[]
+  createdAt         DateTime           @default(now())
+  updatedAt         DateTime           @updatedAt
+
+  @@index([projectId])
+}
+
+model Issue {
+  id              String         @id @default(cuid())
+  analysisId      String
+  analysis        Analysis       @relation(fields: [analysisId], references: [id], onDelete: Cascade)
+  severity        Severity       @default(MEDIUM)
+  category        IssueCategory  @default(QUALITY)
+  file            String
+  lineStart       Int?
+  lineEnd         Int?
+  title           String
+  description     String
+  recommendation  String
+  suggestedFix    String?
+  status          IssueStatus    @default(OPEN)
+  recommendations Recommendation[]
+  createdAt       DateTime       @default(now())
+  updatedAt       DateTime       @updatedAt
+
+  @@index([analysisId])
+  @@index([severity])
+}
+
+model Recommendation {
+  id         String     @id @default(cuid())
+  analysisId String
+  issueId    String?
+  analysis   Analysis   @relation(fields: [analysisId], references: [id], onDelete: Cascade)
+  issue      Issue?     @relation(fields: [issueId], references: [id], onDelete: SetNull)
+  title      String
+  body       String
+  createdAt  DateTime   @default(now())
+
+  @@index([analysisId])
+}
+
+model GeneratedTest {
+  id         String     @id @default(cuid())
+  analysisId String
+  analysis   Analysis   @relation(fields: [analysisId], references: [id], onDelete: Cascade)
+  name       String
+  status     TestStatus @default(PASSED)
+  durationMs Int?
+  filePath   String?
+  createdAt  DateTime   @default(now())
+
+  @@index([analysisId])
+}
+
+model Session {
+  id        String   @id @default(cuid())
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  token     String   @unique
+  expiresAt DateTime
+  createdAt DateTime @default(now())
+
+  @@index([userId])
+}
+
+model Activity {
+  id         String    @id @default(cuid())
+  userId     String?
+  user       User?     @relation(fields: [userId], references: [id], onDelete: SetNull)
+  projectId  String?
+  project    Project?  @relation(fields: [projectId], references: [id], onDelete: SetNull)
+  analysisId String?
+  analysis   Analysis? @relation(fields: [analysisId], references: [id], onDelete: SetNull)
+  action     String
+  metadata   Json?
+  createdAt  DateTime  @default(now())
+
+  @@index([userId])
+  @@index([projectId])
 }
