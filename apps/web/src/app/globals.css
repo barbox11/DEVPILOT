@@ -44,6 +44,7 @@
 }
 
 :root {
+  color-scheme: light;
   --color-bg: #fafaf7;
   --color-surface: #ffffff;
   --color-surface-2: #f0f0e9;
@@ -71,6 +72,7 @@
 }
 
 .dark {
+  color-scheme: dark;
   --color-bg: #0b1020;
   --color-surface: #121830;
   --color-surface-2: #1a2338;

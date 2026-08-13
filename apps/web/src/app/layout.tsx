@@ -24,7 +24,22 @@ export default function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="es">
+    <html lang="es" suppressHydrationWarning>
+      <head>
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `(function() {
+              try {
+                var stored = localStorage.getItem("devpilot-theme");
+                var dark = stored
+                  ? stored === "dark"
+                  : window.matchMedia("(prefers-color-scheme: dark)").matches;
+                if (dark) document.documentElement.classList.add("dark");
+              } catch (e) {}
+            })();`,
+          }}
+        />
+      </head>
       <body
         className={`${jetbrainsMono.variable} ${ibmPlexSans.variable} antialiased`}
       >

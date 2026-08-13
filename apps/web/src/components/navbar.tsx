@@ -4,6 +4,7 @@ import { useState } from "react";
 import Link from "next/link";
 import Container from "@/components/container";
 import { Button } from "@/components/button";
+import { ThemeToggle } from "@/components/theme-toggle";
 import { cn } from "@/lib/cn";
 
 const NAV_LINKS = [
@@ -49,6 +50,7 @@ export default function Navbar() {
           </ul>
 
           <div className="hidden items-center gap-3 md:flex">
+            <ThemeToggle />
             <Button href="#" variant="outline" size="sm">
               Iniciar sesión
             </Button>
@@ -113,6 +115,7 @@ export default function Navbar() {
             ))}
           </ul>
           <div className="flex flex-col gap-3 pb-5">
+            <ThemeToggle className="w-full" />
             <Button
               href="#"
               variant="outline"
