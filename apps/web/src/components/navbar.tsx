@@ -21,7 +21,7 @@ export default function Navbar() {
     <header className="sticky top-0 z-50 border-b border-border bg-background/80 backdrop-blur-sm">
       <Container>
         <nav
-          aria-label="Main"
+          aria-label="Principal"
           className="flex h-16 items-center justify-between gap-6"
         >
           <Link href="/" className="flex items-center gap-2.5">
@@ -51,9 +51,6 @@ export default function Navbar() {
 
           <div className="hidden items-center gap-3 md:flex">
             <ThemeToggle />
-            <Button href="#" variant="outline" size="sm">
-              Iniciar sesión
-            </Button>
             <Button href="#escanear" size="sm">
               Comenzar análisis
             </Button>
@@ -116,15 +113,6 @@ export default function Navbar() {
           </ul>
           <div className="flex flex-col gap-3 pb-5">
             <ThemeToggle className="w-full" />
-            <Button
-              href="#"
-              variant="outline"
-              size="sm"
-              className="w-full"
-              onClick={() => setOpen(false)}
-            >
-              Iniciar sesión
-            </Button>
             <Button
               href="#escanear"
               size="sm"

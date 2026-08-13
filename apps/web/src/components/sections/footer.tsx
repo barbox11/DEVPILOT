@@ -1,4 +1,3 @@
-import Link from "next/link";
 import Container from "@/components/container";
 
 const COLUMNS = [
@@ -46,12 +45,9 @@ export function Footer() {
               <ul className="mt-4 space-y-2.5">
                 {column.links.map((link) => (
                   <li key={link}>
-                    <Link
-                      href="#"
-                      className="font-mono text-[13px] text-text-muted transition-colors duration-200 hover:text-text"
-                    >
+                    <span className="font-mono text-[13px] text-text-muted">
                       {link}
-                    </Link>
+                    </span>
                   </li>
                 ))}
               </ul>

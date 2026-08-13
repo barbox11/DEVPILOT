@@ -28,7 +28,7 @@ export function Hero() {
           </p>
           <div className="mt-10 flex flex-col items-center gap-4 sm:flex-row">
             <Button href="#escanear">Comenzar a analizar un proyecto</Button>
-            <Button href="#escanear" variant="outline">
+            <Button href="#como-funciona" variant="outline">
               Ver cómo funciona
             </Button>
           </div>
