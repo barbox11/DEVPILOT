@@ -4,11 +4,11 @@ _Updated: 2026-08-13_
 
 ## Current phase
 
-Fase 2.5 cerrada + dark mode. Modo claro/oscuro completo y pusheado (commit `6853687`). En curso: Fase 3 sin credenciales — status doc, a11y, SEO, testing infra, CI, schema Prisma, services, dashboard shell.
+Fase 3 sin credenciales completada (commits `b13c375`..`e6251b6`): a11y, SEO, vitest, CI, schema Prisma (3A), services API (3B) y dashboard shell (3C). Próxima: auth o conexión Neon (pedir credenciales).
 
 ## Overall progress
 
-~30%
+~38%
 
 ## Completed
 
@@ -24,18 +24,27 @@ Fase 2.5 cerrada + dark mode. Modo claro/oscuro completo y pusheado (commit `685
   - Phase 2 cerrada: prettier format run, dead nav anchors corregidos (SCAN/REPORT/FIX/VERIFY → pasos de Solution), cta.tsx colapsado corregido, `__pycache__/` gitignored, build/lint/typecheck re-verificados verde
 - Phase 2.5 (localización): landing íntegramente en español — `lang="es"`, metadata, navbar (Iniciar sesión/Comenzar análisis), hero, las 10 secciones, footer, chips de severidad (OK/HALLAZGO/ADVERTENCIA), captions e IDs de anclas (`#escanear/#informe/#corregir/#verificar`). Verificado en HTML servido (200, textos es presentes, en ausentes). Commit `13dceb5` pusheado a `origin/main` (github.com/barbox11/DEVPILOT).
 - Phase 2.6 (dark mode): tokens dark bajo `.dark` activados, `color-scheme`, script inyector anti-FOUC en `layout.tsx`, `ThemeToggle` en navbar (desktop + mobile), preferencia persistida en `localStorage("devpilot-theme")` con fallback a `prefers-color-scheme`. Commit `6853687` pusheado.
+- Phase 3 (sin credenciales):
+  - A11y + SEO: skip link, aria-labels en español, enlaces muertos eliminados, metadata OG/Twitter/JSON-LD, `robots.txt`, `sitemap.xml` (commits `b13c375`, `19a03ca`).
+  - Testing: vitest + `@vitejs/plugin-react`, `npm test` verde (6 tests). Commit `d1ed375`.
+  - CI: GitHub Actions (lint+typecheck+build+test). Commit `75c2400`.
+  - 3A Datos: schema Prisma completo (User, Session, Project, Analysis, Issue, Recommendation, GeneratedTest, Activity + enums), validado y generado. Commit `20d7653`.
+  - 3B API: services layer, zod validation, auth Bearer por sesión, rutas REST protegidas. Commit `348ca03`.
+  - 3C Dashboard: shell dark de instrumento, 9 secciones + detalle de proyecto con estados skeleton/empty, `noindex`. Commit `e6251b6`.
+  - ai-handoff 004 documentado.
 
 ## In progress
 
-- Ninguno. En espera de dirección de la Fase 3.
+- Ninguno. Fase 3 sin credenciales cerrada y verificada verde (lint/typecheck/build/test). A la espera de dirección: auth o credenciales Neon.
 
 ## Pending
 
-- Dashboard shell (Overview, Projects, Issues, Security, Testing, Architecture, AI Review, Activity, Settings)
-- Data model + Prisma schema full design; auth
-- Neon connection + migrations (blocked on credentials)
+- Dashboard shell (Overview, Projects, Issues, Security, Testing, Architecture, AI Review, Activity, Settings) → shell creado; falta conectar datos reales.
+- Auth (registro/login/logout + sesión) + conectar dashboard a la API.
+- Neon connection + migraciones (blocked on credentials)
 - Vercel + GitHub setup (blocked on credentials/repo)
-- Testing infra (Vitest + Playwright)
+- Testing infra (Vitest + Playwright): Vitest ✔ · Playwright pendiente
+- Datos reales en el dashboard (fetch a la API, TanStack Query)
 - Navbar `#report/#fix/#verify` anchors → corregidos: ahora apuntan a los pasos SCAN/REPORT/FIX/VERIFY de la sección Solution
 
 ## Blocked
@@ -73,20 +82,19 @@ Fase 2.5 cerrada + dark mode. Modo claro/oscuro completo y pusheado (commit `685
 
 ## Database status
 
-- Prisma schema placeholder (`HealthCheck`), generate OK. Migraciones pending credenciales Neon.
+- Schema de dominio v1 (Fase 3A) diseñado, `prisma validate` + `prisma generate` OK. Migraciones pending credenciales Neon.
 
 ## Backend status
 
-- Express scaffold green (/api/health, error middleware, ESM strict). Sin features de negocio aún.
+- Express scaffold + services layer + validación zod + auth Bearer (session). Rutas REST autenticadas bajo `/api`. Sin features de negocio conectadas a DB real aún.
 
 ## Frontend status
 
-- Landing completa y verde (build/lint/typecheck). Design system aplicado. Modo claro/oscuro funcional.
-- Dashboard pendiente.
+- Landing completa y verde con dark mode + a11y + SEO. Dashboard shell (Fase 3C) con 9 secciones + detalle de proyecto, estados skeleton/empty. Conexión a API pendiente de auth.
 
 ## Testing status
 
-- No iniciado. Plan: Vitest + Playwright. Script `test` placeholder (vitest sin dep). Playwright no instalado.
+- Vitest instalado en workspace web con `vitest.config.mts`; `npm test` verde (6 tests: `cn`, `CodePanel`). Playwright pendiente.
 
 ## Deployment status
 
@@ -114,10 +122,10 @@ Fase 2.5 cerrada + dark mode. Modo claro/oscuro completo y pusheado (commit `685
 
 ## Next tasks
 
-1. Fase 3 sin credenciales (en curso): a11y, SEO, testing infra (Vitest), CI, schema Prisma, services API, dashboard shell.
-2. Después: decidir orden — auth vs conexión Neon (pedir credenciales) vs deploy Vercel.
-3. Pedir al usuario las restantes Partes 2-10 del master prompt para validar cumplimiento completo.
+1. Auth: registro/login/logout con sesión sobre el schema 3A (no requiere credenciales para código).
+2. Pedir credenciales Neon (DATABASE_URL) → migraciones → conectar dashboard a la API real.
+3. Después Vercel (deploy) y Playwright E2E.
 
 ## Recommended next step
 
-Fase 3C: dashboard shell con identidad dark de "instrumento" (aplicar clase `.dark`), o modelo de datos Prisma si se prioriza backend. Las credenciales Neon/Vercel se piden al llegar al punto de conexión.
+Auth con sesión para desbloquear las rutas API y conectar el dashboard a datos reales; al llegar a migraciones, pedir credenciales Neon.
