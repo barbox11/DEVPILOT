@@ -1,14 +1,14 @@
 # DevPilot Project Status
 
-_Updated: 2026-08-12_
+_Updated: 2026-08-13_
 
 ## Current phase
 
-Fase 2.5 — Landing localizada a español (commit `13dceb5` pusheado). Fase 3 next (dashboard shell / data model / auth).
+Fase 2.5 cerrada + dark mode. Modo claro/oscuro completo y pusheado (commit `6853687`). En curso: Fase 3 sin credenciales — status doc, a11y, SEO, testing infra, CI, schema Prisma, services, dashboard shell.
 
 ## Overall progress
 
-~22%
+~30%
 
 ## Completed
 
@@ -23,6 +23,7 @@ Fase 2.5 — Landing localizada a español (commit `13dceb5` pusheado). Fase 3 n
   - Review loop: 3 tasks, 3 fix rounds (dark tokens scoping, chip contrast ≥4.5:1, CTA cascade CRITICAL via twMerge), final review clean (minors: 2 fixed — code panel mobile overflow, trust reuses Eyebrow; rest parked)
   - Phase 2 cerrada: prettier format run, dead nav anchors corregidos (SCAN/REPORT/FIX/VERIFY → pasos de Solution), cta.tsx colapsado corregido, `__pycache__/` gitignored, build/lint/typecheck re-verificados verde
 - Phase 2.5 (localización): landing íntegramente en español — `lang="es"`, metadata, navbar (Iniciar sesión/Comenzar análisis), hero, las 10 secciones, footer, chips de severidad (OK/HALLAZGO/ADVERTENCIA), captions e IDs de anclas (`#escanear/#informe/#corregir/#verificar`). Verificado en HTML servido (200, textos es presentes, en ausentes). Commit `13dceb5` pusheado a `origin/main` (github.com/barbox11/DEVPILOT).
+- Phase 2.6 (dark mode): tokens dark bajo `.dark` activados, `color-scheme`, script inyector anti-FOUC en `layout.tsx`, `ThemeToggle` en navbar (desktop + mobile), preferencia persistida en `localStorage("devpilot-theme")` con fallback a `prefers-color-scheme`. Commit `6853687` pusheado.
 
 ## In progress
 
@@ -80,7 +81,8 @@ Fase 2.5 — Landing localizada a español (commit `13dceb5` pusheado). Fase 3 n
 
 ## Frontend status
 
-- Landing completa y verde (build/lint/typecheck). Design system aplicado. Dashboard pendiente.
+- Landing completa y verde (build/lint/typecheck). Design system aplicado. Modo claro/oscuro funcional.
+- Dashboard pendiente.
 
 ## Testing status
 
@@ -112,10 +114,10 @@ Fase 2.5 — Landing localizada a español (commit `13dceb5` pusheado). Fase 3 n
 
 ## Next tasks
 
-1. Decidir orden: Dashboard shell (Fase 3 frontend) vs modelo de datos Prisma completo vs auth.
-2. Pedir credenciales Neon/Vercel al llegar al punto de conexión.
+1. Fase 3 sin credenciales (en curso): a11y, SEO, testing infra (Vitest), CI, schema Prisma, services API, dashboard shell.
+2. Después: decidir orden — auth vs conexión Neon (pedir credenciales) vs deploy Vercel.
 3. Pedir al usuario las restantes Partes 2-10 del master prompt para validar cumplimiento completo.
 
 ## Recommended next step
 
-Fase 3: dashboard shell con la identidad dark de "instrumento" (aplicar clase .dark), o modelo de datos Prisma si se prioriza backend.
+Fase 3C: dashboard shell con identidad dark de "instrumento" (aplicar clase `.dark`), o modelo de datos Prisma si se prioriza backend. Las credenciales Neon/Vercel se piden al llegar al punto de conexión.
