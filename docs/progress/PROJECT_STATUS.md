@@ -4,7 +4,7 @@ _Updated: 2026-08-14_
 
 ## Current phase
 
-Fase 3.5 completada (commit `5402496`): autenticación completa (registro/login/logout/sesión) y dashboard conectado a la API con datos reales vía TanStack Query. Todo verde: lint ✓ typecheck ✓ build (16 rutas) ✓ tests 14/14 ✓. Push `5402496` → `origin/main`. Próxima: pedir credenciales Neon/Vercel para migraciones, seed y deploy.
+Fase 3.6 completada: pulido UI/UX del dashboard tras la auditoría de la Parte 3 (detalle de proyecto con datos reales, flujo IA contextual issue→por qué→análisis→recomendación→fix, estados offline/success con reintento). Todo verde: lint ✓ typecheck ✓ build (16 rutas) ✓ tests 17/17 ✓. Próxima: pedir credenciales Neon/Vercel para migraciones, seed y deploy.
 
 ## Overall progress
 
@@ -27,10 +27,11 @@ Fase 3.5 completada (commit `5402496`): autenticación completa (registro/login/
 
 ## In progress
 
-- Esperando credenciales del usuario (paso 3 de la hoja de ruta): **detener y solicitar** Neon (`DATABASE_URL`, `DATABASE_URL_UNPOOLED`) y Vercel (Project/Org ID + Token).
+- Fase 3.6 (pulido UI/UX dashboard) completada. Pendiente commit+push y retomar el paso 3: solicitar credenciales Neon/Vercel.
 
 ## Pending
 
+- Commit + push de la fase 3.6 y **pedir credenciales** (paso 3): Neon (`DATABASE_URL`, `DATABASE_URL_UNPOOLED`) y Vercel (Project/Org ID + Token).
 - **Neon**: aplicar migraciones (`prisma migrate dev`), conectar la API real, seed de datos de prueba para poblar el dashboard (blocked on credentials).
 - **Vercel**: deploy frontend (decidir backend serverless vs infraestructura alternativa) (blocked on credentials).
 - **Testing E2E**: Playwright (registro→login→crear proyecto→análisis) pendiente de entorno con DB.
@@ -84,7 +85,7 @@ Fase 3.5 completada (commit `5402496`): autenticación completa (registro/login/
 
 ## Testing status
 
-- Vitest: web 9 tests (cn, CodePanel, api client) + api 8 tests (authService con prisma mockeado). Total 14/14. `npm test` corre ambos workspaces. Playwright pendiente.
+- Vitest: web 9 tests (cn, CodePanel, api client) + api 8 tests (authService con prisma mockeado). Total 17/17. `npm test` corre ambos workspaces. Playwright pendiente.
 
 ## Deployment status
 
@@ -108,16 +109,17 @@ Fase 3.5 completada (commit `5402496`): autenticación completa (registro/login/
 
 ## Documentation status
 
-- ARCHITECTURE, DEPLOYMENT, DATABASE, PROJECT_STATUS, ai-handoff 001–004. Falta: `docs/api` con rutas auth/nuevas, ai-handoff 005, grafo graphify, Playwright.
+- ARCHITECTURE, DEPLOYMENT, DATABASE, PROJECT_STATUS, ai-handoff 001–005. Falta: `docs/api` con rutas auth/nuevas, grafo graphify, Playwright.
 
 ## Next tasks
 
-1. **PEDIR CREDENCIALES** al usuario: Neon (`DATABASE_URL`, `DATABASE_URL_UNPOOLED`) → migraciones + seed; Vercel (Project/Org ID + Token) → deploy.
-2. Conectar el dashboard a la DB real (verificar los fetch con datos).
-3. Playwright E2E (registro→login→proyecto→análisis).
-4. Graphify: grafo de arquitectura en `docs/`.
-5. Documentar `docs/api` y ai-handoff 005.
+1. **Commit + push** de la fase 3.6.
+2. **PEDIR CREDENCIALES** al usuario: Neon (`DATABASE_URL`, `DATABASE_URL_UNPOOLED`) → migraciones + seed; Vercel (Project/Org ID + Token) → deploy.
+3. Conectar el dashboard a la DB real (verificar los fetch con datos).
+4. Playwright E2E (registro→login→proyecto→análisis).
+5. Graphify: grafo de arquitectura en `docs/`.
+6. Documentar `docs/api` pendiente.
 
 ## Recommended next step
 
-Solicitar al usuario las credenciales de Neon y Vercel (paso 3 de la hoja de ruta). Con Neon: `prisma migrate dev` + seed. Con Vercel: deploy del frontend.
+Commit + push de la fase 3.6 y solicitar al usuario las credenciales de Neon y Vercel (paso 3 de la hoja de ruta). Con Neon: `prisma migrate dev` + seed. Con Vercel: deploy del frontend.

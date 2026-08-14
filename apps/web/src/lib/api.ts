@@ -39,10 +39,15 @@ export async function api<T>(
   };
   if (auth && token) requestHeaders.Authorization = `Bearer ${token}`;
 
-  const res = await fetch(`${API_BASE_URL}${path}`, {
-    ...rest,
-    headers: requestHeaders,
-  });
+  let res: Response;
+  try {
+    res = await fetch(`${API_BASE_URL}${path}`, {
+      ...rest,
+      headers: requestHeaders,
+    });
+  } catch {
+    throw new ApiError("Sin conexión con la API", 0);
+  }
 
   let body: unknown = null;
   try {
@@ -61,6 +66,10 @@ export async function api<T>(
   }
 
   return body as T;
+}
+
+export function isOffline(): boolean {
+  return typeof navigator !== "undefined" && navigator.onLine === false;
 }
 
 export const apiClient = {

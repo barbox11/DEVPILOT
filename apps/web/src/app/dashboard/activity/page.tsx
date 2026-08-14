@@ -4,12 +4,15 @@ import {
   PageHeader,
   SkeletonGrid,
   EmptyState,
+  DataError,
 } from "@/components/dashboard/view";
 import { PulseIcon } from "@/components/dashboard/icons";
 import { useActivity } from "@/lib/queries";
+import { useOnline } from "@/lib/use-online";
 
 export default function ActivityPage() {
-  const { data, isLoading, isError } = useActivity();
+  const { data, isLoading, isError, refetch } = useActivity();
+  const offline = !useOnline();
   const activity = data?.activity ?? [];
 
   return (
@@ -23,17 +26,7 @@ export default function ActivityPage() {
         {isLoading ? (
           <SkeletonGrid count={3} />
         ) : isError ? (
-          <div
-            role="alert"
-            className="rounded-md border border-border bg-surface px-6 py-10 text-center"
-          >
-            <p className="font-mono text-sm text-accent-finding-strong">
-              No se pudo cargar la actividad.
-            </p>
-            <p className="mt-2 text-sm text-text-muted">
-              Comprueba que la API esté en marcha y vuelve a intentarlo.
-            </p>
-          </div>
+          <DataError offline={offline} onRetry={() => void refetch()} />
         ) : activity.length === 0 ? (
           <EmptyState
             icon={<PulseIcon />}

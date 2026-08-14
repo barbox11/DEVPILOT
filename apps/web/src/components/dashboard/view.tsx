@@ -1,5 +1,6 @@
 import type { ReactNode } from "react";
 import { Button } from "@/components/button";
+import { isOffline } from "@/lib/api";
 
 export function PageHeader({
   eyebrow,
@@ -100,6 +101,50 @@ export function EmptyState({
           </Button>
         </div>
       ) : null}
+    </div>
+  );
+}
+
+export function DataError({
+  offline,
+  onRetry,
+}: {
+  offline?: boolean;
+  onRetry?: () => void;
+}) {
+  return (
+    <div
+      role="alert"
+      className="mt-10 rounded-md border border-border bg-surface px-6 py-12 text-center"
+    >
+      <p className="font-mono text-sm font-semibold text-accent-finding-strong">
+        {offline ?? isOffline()
+          ? "Sin conexión"
+          : "No se pudieron cargar los datos"}
+      </p>
+      <p className="mx-auto mt-2 max-w-md text-sm text-text-muted">
+        {offline ?? isOffline()
+          ? "Revisa tu conexión y vuelve a intentarlo."
+          : "Comprueba que la API esté en marcha y vuelve a intentarlo."}
+      </p>
+      {onRetry ? (
+        <div className="mt-6">
+          <Button type="button" variant="outline" size="sm" onClick={onRetry}>
+            Reintentar
+          </Button>
+        </div>
+      ) : null}
+    </div>
+  );
+}
+
+export function SuccessBanner({ message }: { message: string }) {
+  return (
+    <div
+      role="status"
+      className="rounded-md border border-accent-pass bg-accent-pass-soft px-4 py-3 text-sm text-accent-pass-strong"
+    >
+      {message}
     </div>
   );
 }

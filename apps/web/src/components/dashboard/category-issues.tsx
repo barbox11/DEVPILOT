@@ -4,8 +4,10 @@ import {
   PageHeader,
   SkeletonGrid,
   EmptyState,
+  DataError,
 } from "@/components/dashboard/view";
 import { useIssues } from "@/lib/queries";
+import { useOnline } from "@/lib/use-online";
 import { cn } from "@/lib/cn";
 import type { ReactNode } from "react";
 
@@ -40,7 +42,8 @@ export function CategoryIssues({
   emptyCopy: string;
   icon: ReactNode;
 }) {
-  const { data, isLoading, isError } = useIssues();
+  const { data, isLoading, isError, refetch } = useIssues();
+  const offline = !useOnline();
   const issues = (data?.issues ?? []).filter(
     (issue) => issue.category === category,
   );
@@ -52,17 +55,7 @@ export function CategoryIssues({
         {isLoading ? (
           <SkeletonGrid count={3} />
         ) : isError ? (
-          <div
-            role="alert"
-            className="rounded-md border border-border bg-surface px-6 py-10 text-center"
-          >
-            <p className="font-mono text-sm text-accent-finding-strong">
-              No se pudieron cargar los datos.
-            </p>
-            <p className="mt-2 text-sm text-text-muted">
-              Comprueba que la API esté en marcha y vuelve a intentarlo.
-            </p>
-          </div>
+          <DataError offline={offline} onRetry={() => void refetch()} />
         ) : issues.length === 0 ? (
           <EmptyState icon={icon} title={emptyTitle} copy={emptyCopy} />
         ) : (

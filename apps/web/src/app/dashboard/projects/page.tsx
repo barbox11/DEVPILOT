@@ -2,28 +2,32 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import { PageHeader, EmptyState } from "@/components/dashboard/view";
+import { PageHeader, EmptyState, DataError, SuccessBanner } from "@/components/dashboard/view";
 import { FolderIcon } from "@/components/dashboard/icons";
 import { Button } from "@/components/button";
 import { useProjects } from "@/lib/queries";
 import { useCreateProject, useDeleteProject } from "@/lib/mutations";
 import { ApiError } from "@/lib/api";
+import { useOnline } from "@/lib/use-online";
 
 export default function ProjectsPage() {
-  const { data, isLoading, isError } = useProjects();
+  const { data, isLoading, isError, refetch } = useProjects();
   const createProject = useCreateProject();
   const deleteProject = useDeleteProject();
+  const offline = !useOnline();
 
   const [showForm, setShowForm] = useState(false);
   const [name, setName] = useState("");
   const [repoUrl, setRepoUrl] = useState("");
   const [error, setError] = useState<string | null>(null);
+  const [success, setSuccess] = useState<string | null>(null);
   const [deletingId, setDeletingId] = useState<string | null>(null);
 
   const projects = data?.projects ?? [];
 
   async function handleCreate() {
     setError(null);
+    setSuccess(null);
     if (!name.trim()) {
       setError("El nombre del proyecto es obligatorio.");
       return;
@@ -36,6 +40,7 @@ export default function ProjectsPage() {
       setName("");
       setRepoUrl("");
       setShowForm(false);
+      setSuccess("Proyecto creado correctamente.");
     } catch (caught) {
       setError(
         caught instanceof ApiError
@@ -48,8 +53,10 @@ export default function ProjectsPage() {
   async function handleDelete(id: string) {
     setDeletingId(id);
     setError(null);
+    setSuccess(null);
     try {
       await deleteProject.mutateAsync(id);
+      setSuccess("Proyecto eliminado.");
     } catch (caught) {
       setError(
         caught instanceof ApiError
@@ -139,6 +146,8 @@ export default function ProjectsPage() {
         </form>
       ) : null}
 
+      {success ? <div className="mt-8"><SuccessBanner message={success} /></div> : null}
+
       <div className="mt-8">
         {isLoading ? (
           <div className="space-y-3">
@@ -151,17 +160,7 @@ export default function ProjectsPage() {
             ))}
           </div>
         ) : isError ? (
-          <div
-            role="alert"
-            className="rounded-md border border-border bg-surface px-6 py-10 text-center"
-          >
-            <p className="font-mono text-sm text-accent-finding-strong">
-              No se pudieron cargar los proyectos.
-            </p>
-            <p className="mt-2 text-sm text-text-muted">
-              Comprueba que la API esté en marcha y vuelve a intentarlo.
-            </p>
-          </div>
+          <DataError offline={offline} onRetry={() => void refetch()} />
         ) : projects.length === 0 ? (
           <EmptyState
             icon={<FolderIcon />}

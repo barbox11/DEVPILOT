@@ -4,12 +4,15 @@ import {
   PageHeader,
   SkeletonGrid,
   EmptyState,
+  DataError,
 } from "@/components/dashboard/view";
 import { FolderIcon, PulseIcon } from "@/components/dashboard/icons";
 import { useOverview } from "@/lib/queries";
+import { useOnline } from "@/lib/use-online";
 
 export default function OverviewPage() {
-  const { data, isLoading, isError } = useOverview();
+  const { data, isLoading, isError, refetch } = useOverview();
+  const offline = !useOnline();
 
   const metrics = [
     {
@@ -57,17 +60,7 @@ export default function OverviewPage() {
       {isLoading ? (
         <SkeletonGrid count={4} />
       ) : isError ? (
-        <div
-          role="alert"
-          className="mt-10 rounded-md border border-border bg-surface px-6 py-10 text-center"
-        >
-          <p className="font-mono text-sm text-accent-finding-strong">
-            No se pudieron cargar los datos del panel.
-          </p>
-          <p className="mt-2 text-sm text-text-muted">
-            Comprueba que la API esté en marcha y vuelve a intentarlo.
-          </p>
-        </div>
+        <DataError offline={offline} onRetry={() => void refetch()} />
       ) : data && data.metrics.projects > 0 ? (
         <div className="mt-10 space-y-4">
           <h2 className="font-mono text-sm font-semibold uppercase tracking-[0.2em] text-text-muted">

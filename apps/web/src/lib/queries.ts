@@ -42,16 +42,10 @@ export type Issue = {
   title: string;
   description: string;
   recommendation: string;
+  suggestedFix: string | null;
   status: string;
   createdAt: string;
   analysis?: { id: string; project: { id: string; name: string } };
-};
-
-export type Activity = {
-  id: string;
-  action: string;
-  createdAt: string;
-  metadata: Record<string, unknown> | null;
 };
 
 export type Recommendation = {
@@ -62,6 +56,32 @@ export type Recommendation = {
   body: string;
   createdAt: string;
   analysis?: { id: string; project: { id: string; name: string } };
+  issue?: {
+    id: string;
+    severity: "CRITICAL" | "HIGH" | "MEDIUM" | "LOW";
+    category: string;
+    file: string;
+    lineStart: number | null;
+    title: string;
+    description: string;
+    suggestedFix: string | null;
+  } | null;
+};
+
+export type ProjectWithDetails = Project & {
+  analyses: Array<
+    Analysis & {
+      issues: Issue[];
+      recommendations: Recommendation[];
+    }
+  >;
+};
+
+export type Activity = {
+  id: string;
+  action: string;
+  createdAt: string;
+  metadata: Record<string, unknown> | null;
 };
 
 export type Overview = {
@@ -111,9 +131,7 @@ export function useProject(id: string) {
   return useQuery({
     queryKey: queryKeys.project(id),
     queryFn: () =>
-      apiClient.get<{ project: Project & { analyses: Analysis[] } }>(
-        `/projects/${id}`,
-      ),
+      apiClient.get<{ project: ProjectWithDetails }>(`/projects/${id}`),
     enabled: Boolean(id),
   });
 }

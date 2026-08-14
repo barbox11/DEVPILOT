@@ -30,7 +30,14 @@ export async function getProjectDetail(id: string, userId: string) {
   return getPrisma().project.findFirst({
     where: { id, ownerId: userId },
     include: {
-      analyses: { orderBy: { createdAt: "desc" }, take: 10 },
+      analyses: {
+        orderBy: { createdAt: "desc" },
+        take: 10,
+        include: {
+          issues: { orderBy: { createdAt: "desc" } },
+          recommendations: { orderBy: { createdAt: "desc" } },
+        },
+      },
       _count: { select: { analyses: true } },
     },
   });
