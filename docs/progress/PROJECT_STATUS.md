@@ -27,7 +27,7 @@ Fase 3.6 completada: pulido UI/UX del dashboard tras la auditoría de la Parte 3
 
 ## In progress
 
-- Fase 3.6 (pulido UI/UX dashboard) completada. Pendiente commit+push y retomar el paso 3: solicitar credenciales Neon/Vercel.
+- Neon conectado (migración + seed OK, commit `067a3b6`). Pendiente: resolver conexión runtime de la API a Neon y deploy a Vercel. Ver `docs/ai-handoff/006-neon-migracion-seed-y-pulido-ui.md`.
 
 ## Pending
 
@@ -113,13 +113,13 @@ Fase 3.6 completada: pulido UI/UX del dashboard tras la auditoría de la Parte 3
 
 ## Next tasks
 
-1. **Commit + push** de la fase 3.6.
-2. **PEDIR CREDENCIALES** al usuario: Neon (`DATABASE_URL`, `DATABASE_URL_UNPOOLED`) → migraciones + seed; Vercel (Project/Org ID + Token) → deploy.
-3. Conectar el dashboard a la DB real (verificar los fetch con datos).
+1. Resolver la conexión runtime de la API a Neon (la CLI conecta, el runtime dev no).
+2. Deploy a Vercel (token recibido; falta Project/Org ID o `vercel link`) y decidir hosting del backend.
+3. Conectar el dashboard a la DB real (validar login + overview + detalle + AI review).
 4. Playwright E2E (registro→login→proyecto→análisis).
 5. Graphify: grafo de arquitectura en `docs/`.
 6. Documentar `docs/api` pendiente.
 
 ## Recommended next step
 
-Commit + push de la fase 3.6 y solicitar al usuario las credenciales de Neon y Vercel (paso 3 de la hoja de ruta). Con Neon: `prisma migrate dev` + seed. Con Vercel: deploy del frontend.
+Resolver la conexión runtime de la API a Neon (diagnóstico en ai-handoff 006) y validar el dashboard con datos reales; después deploy a Vercel.
