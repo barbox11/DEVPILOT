@@ -1,7 +1,9 @@
 import { Router } from "express";
 import activityRouter from "./activity.js";
 import analysesRouter from "./analyses.js";
+import authRouter from "./auth.js";
 import issuesRouter from "./issues.js";
+import overviewRouter from "./overview.js";
 import projectsRouter from "./projects.js";
 import recommendationsRouter from "./recommendations.js";
 
@@ -19,6 +21,8 @@ router.get("/", (_req, res) => {
   res.json({ name: "DevPilot API", version: "0.1.0" });
 });
 
+router.use("/auth", authRouter);
+router.use("/overview", overviewRouter);
 router.use("/projects", projectsRouter);
 router.use("/analyses", analysesRouter);
 router.use("/issues", issuesRouter);

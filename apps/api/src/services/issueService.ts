@@ -1,4 +1,4 @@
-import type { IssueStatus } from "@prisma/client";
+import type { IssueCategory, IssueStatus, Severity } from "@prisma/client";
 import { getPrisma } from "../lib/prisma.js";
 
 export async function listIssuesForAnalysis(
@@ -8,6 +8,29 @@ export async function listIssuesForAnalysis(
   return getPrisma().issue.findMany({
     where: { analysis: { id: analysisId, project: { ownerId } } },
     orderBy: { createdAt: "desc" },
+  });
+}
+
+export async function listIssuesForUser(
+  ownerId: string,
+  params: { category?: IssueCategory; severity?: Severity } = {},
+) {
+  return getPrisma().issue.findMany({
+    where: {
+      analysis: { project: { ownerId } },
+      ...(params.category ? { category: params.category } : {}),
+      ...(params.severity ? { severity: params.severity } : {}),
+    },
+    orderBy: { createdAt: "desc" },
+    take: 100,
+    include: {
+      analysis: {
+        select: {
+          id: true,
+          project: { select: { id: true, name: true } },
+        },
+      },
+    },
   });
 }
 

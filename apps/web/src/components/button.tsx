@@ -22,7 +22,7 @@ type ButtonProps = CommonProps & {
   >;
 
 const baseClasses =
-  "inline-flex cursor-pointer items-center justify-center gap-2 rounded-md font-medium transition-colors duration-200";
+  "inline-flex cursor-pointer items-center justify-center gap-2 rounded-md font-medium transition-colors duration-200 disabled:cursor-not-allowed disabled:opacity-60";
 
 const sizeClasses = {
   sm: "min-h-[44px] px-4 py-2 text-[13px]",

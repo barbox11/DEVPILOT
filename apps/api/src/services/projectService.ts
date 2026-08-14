@@ -35,3 +35,43 @@ export async function getProjectDetail(id: string, userId: string) {
     },
   });
 }
+
+export type UpdateProjectInput = {
+  name?: string;
+  repoUrl?: string | null;
+  defaultBranch?: string;
+};
+
+export async function updateProject(
+  id: string,
+  input: UpdateProjectInput,
+  userId: string,
+) {
+  const project = await getPrisma().project.findFirst({
+    where: { id, ownerId: userId },
+  });
+  if (!project) return null;
+
+  return getPrisma().project.update({
+    where: { id },
+    data: {
+      ...(input.name !== undefined ? { name: input.name } : {}),
+      ...(input.repoUrl !== undefined
+        ? { repoUrl: input.repoUrl || null }
+        : {}),
+      ...(input.defaultBranch !== undefined
+        ? { defaultBranch: input.defaultBranch }
+        : {}),
+    },
+  });
+}
+
+export async function deleteProject(id: string, userId: string) {
+  const project = await getPrisma().project.findFirst({
+    where: { id, ownerId: userId },
+  });
+  if (!project) return null;
+
+  await getPrisma().project.delete({ where: { id } });
+  return project;
+}

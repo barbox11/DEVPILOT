@@ -15,7 +15,7 @@
     "lint": "npm run lint --workspace @devpilot/web && npm run lint --workspace @devpilot/api",
     "typecheck": "npm run typecheck --workspace @devpilot/web && npm run typecheck --workspace @devpilot/api",
     "format": "prettier --write \"**/*.{ts,tsx,js,json,md}\"",
-    "test": "npm run test --workspace @devpilot/web"
+    "test": "npm run test --workspace @devpilot/web && npm run test --workspace @devpilot/api"
   },
   "devDependencies": {
     "concurrently": "^9.1.2",

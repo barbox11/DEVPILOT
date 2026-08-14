@@ -50,3 +50,15 @@ export async function getAnalysisDetail(id: string, ownerId: string) {
     },
   });
 }
+
+export async function listAnalysesForUser(ownerId: string, take = 50) {
+  return getPrisma().analysis.findMany({
+    where: { project: { ownerId } },
+    orderBy: { createdAt: "desc" },
+    take,
+    include: {
+      project: { select: { id: true, name: true } },
+      _count: { select: { issues: true, recommendations: true } },
+    },
+  });
+}

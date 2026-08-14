@@ -9,3 +9,19 @@ export async function listRecommendationsForAnalysis(
     orderBy: { createdAt: "desc" },
   });
 }
+
+export async function listRecommendationsForUser(ownerId: string, take = 50) {
+  return getPrisma().recommendation.findMany({
+    where: { analysis: { project: { ownerId } } },
+    orderBy: { createdAt: "desc" },
+    take,
+    include: {
+      analysis: {
+        select: {
+          id: true,
+          project: { select: { id: true, name: true } },
+        },
+      },
+    },
+  });
+}

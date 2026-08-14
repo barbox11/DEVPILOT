@@ -6,6 +6,7 @@ import {
   createAnalysis,
   getAnalysisDetail,
   listAnalysesForProject,
+  listAnalysesForUser,
 } from "../services/analysisService.js";
 
 const router = Router();
@@ -20,6 +21,15 @@ const createAnalysisSchema = z.object({
 
 router.use(requireAuth);
 
+router.get("/", async (req, res, next) => {
+  try {
+    const analyses = await listAnalysesForUser(req.user!.id);
+    res.json({ analyses });
+  } catch (error) {
+    next(error);
+  }
+});
+
 router.get(
   "/project/:projectId",
   validate({ params: projectIdParamsSchema }),
@@ -30,9 +40,7 @@ router.get(
         req.user!.id,
       );
       if (analyses === null) {
-        res
-          .status(404)
-          .json({ error: { message: "Proyecto no encontrado" } });
+        res.status(404).json({ error: { message: "Proyecto no encontrado" } });
         return;
       }
       res.json({ analyses });
@@ -53,9 +61,7 @@ router.post(
         ...req.body,
       });
       if (analysis === null) {
-        res
-          .status(404)
-          .json({ error: { message: "Proyecto no encontrado" } });
+        res.status(404).json({ error: { message: "Proyecto no encontrado" } });
         return;
       }
       res.status(201).json({ analysis });
@@ -65,19 +71,21 @@ router.post(
   },
 );
 
-router.get("/:id", validate({ params: idParamsSchema }), async (req, res, next) => {
-  try {
-    const analysis = await getAnalysisDetail(req.params.id, req.user!.id);
-    if (!analysis) {
-      res
-        .status(404)
-        .json({ error: { message: "Análisis no encontrado" } });
-      return;
+router.get(
+  "/:id",
+  validate({ params: idParamsSchema }),
+  async (req, res, next) => {
+    try {
+      const analysis = await getAnalysisDetail(req.params.id, req.user!.id);
+      if (!analysis) {
+        res.status(404).json({ error: { message: "Análisis no encontrado" } });
+        return;
+      }
+      res.json({ analysis });
+    } catch (error) {
+      next(error);
     }
-    res.json({ analysis });
-  } catch (error) {
-    next(error);
-  }
-});
+  },
+);
 
 export default router;

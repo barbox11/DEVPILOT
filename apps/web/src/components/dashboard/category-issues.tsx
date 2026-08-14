@@ -5,9 +5,9 @@ import {
   SkeletonGrid,
   EmptyState,
 } from "@/components/dashboard/view";
-import { AlertIcon } from "@/components/dashboard/icons";
 import { useIssues } from "@/lib/queries";
 import { cn } from "@/lib/cn";
+import type { ReactNode } from "react";
 
 const SEVERITY_CHIP: Record<string, string> = {
   CRITICAL: "bg-accent-finding-soft text-accent-finding-strong",
@@ -23,17 +23,31 @@ const SEVERITY_LABEL: Record<string, string> = {
   LOW: "BAJO",
 };
 
-export default function IssuesPage() {
+export function CategoryIssues({
+  eyebrow,
+  title,
+  lead,
+  category,
+  emptyTitle,
+  emptyCopy,
+  icon,
+}: {
+  eyebrow: string;
+  title: string;
+  lead: string;
+  category: string;
+  emptyTitle: string;
+  emptyCopy: string;
+  icon: ReactNode;
+}) {
   const { data, isLoading, isError } = useIssues();
-  const issues = data?.issues ?? [];
+  const issues = (data?.issues ?? []).filter(
+    (issue) => issue.category === category,
+  );
 
   return (
     <div className="mx-auto max-w-6xl">
-      <PageHeader
-        eyebrow="HALLAZGOS"
-        title="Issues"
-        lead="Todos los hallazgos por severidad: errores, calidad y testing."
-      />
+      <PageHeader eyebrow={eyebrow} title={title} lead={lead} />
       <div className="mt-8">
         {isLoading ? (
           <SkeletonGrid count={3} />
@@ -43,18 +57,14 @@ export default function IssuesPage() {
             className="rounded-md border border-border bg-surface px-6 py-10 text-center"
           >
             <p className="font-mono text-sm text-accent-finding-strong">
-              No se pudieron cargar los hallazgos.
+              No se pudieron cargar los datos.
             </p>
             <p className="mt-2 text-sm text-text-muted">
               Comprueba que la API esté en marcha y vuelve a intentarlo.
             </p>
           </div>
         ) : issues.length === 0 ? (
-          <EmptyState
-            icon={<AlertIcon />}
-            title="Sin hallazgos registrados"
-            copy="Cuando se complete un análisis, los hallazgos aparecerán aquí con severidad, evidencia y corrección sugerida."
-          />
+          <EmptyState icon={icon} title={emptyTitle} copy={emptyCopy} />
         ) : (
           <ul className="space-y-3">
             {issues.map((issue) => (
@@ -70,9 +80,6 @@ export default function IssuesPage() {
                     )}
                   >
                     {SEVERITY_LABEL[issue.severity] ?? issue.severity}
-                  </span>
-                  <span className="font-mono text-xs uppercase tracking-[0.2em] text-text-muted">
-                    {issue.category}
                   </span>
                   <span className="font-mono text-xs text-text-muted">
                     {issue.analysis?.project.name}

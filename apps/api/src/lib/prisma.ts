@@ -1,6 +1,8 @@
 import { PrismaClient } from "@prisma/client";
 
-const globalForPrisma = globalThis as unknown as { __devpilotPrisma?: PrismaClient };
+const globalForPrisma = globalThis as unknown as {
+  __devpilotPrisma?: PrismaClient;
+};
 
 export function getPrisma(): PrismaClient {
   if (!globalForPrisma.__devpilotPrisma) {

@@ -1,10 +1,11 @@
 import { Router } from "express";
-import { IssueStatus } from "@prisma/client";
+import { IssueCategory, IssueStatus, Severity } from "@prisma/client";
 import { z } from "zod";
 import { requireAuth } from "../middleware/auth.js";
 import { validate } from "../middleware/validate.js";
 import {
   listIssuesForAnalysis,
+  listIssuesForUser,
   updateIssueStatus,
 } from "../services/issueService.js";
 
@@ -13,11 +14,32 @@ const router = Router();
 const analysisIdParamsSchema = z.object({ analysisId: z.string().min(1) });
 const idParamsSchema = z.object({ id: z.string().min(1) });
 
+const listQuerySchema = z.object({
+  category: z.nativeEnum(IssueCategory).optional(),
+  severity: z.nativeEnum(Severity).optional(),
+});
+
 const updateStatusSchema = z.object({
   status: z.nativeEnum(IssueStatus),
 });
 
 router.use(requireAuth);
+
+router.get(
+  "/",
+  validate({ query: listQuerySchema }),
+  async (req, res, next) => {
+    try {
+      const issues = await listIssuesForUser(req.user!.id, {
+        category: req.query.category as never,
+        severity: req.query.severity as never,
+      });
+      res.json({ issues });
+    } catch (error) {
+      next(error);
+    }
+  },
+);
 
 router.get(
   "/analysis/:analysisId",

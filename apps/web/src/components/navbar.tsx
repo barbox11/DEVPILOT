@@ -3,8 +3,8 @@
 import { useState } from "react";
 import Link from "next/link";
 import Container from "@/components/container";
-import { Button } from "@/components/button";
 import { ThemeToggle } from "@/components/theme-toggle";
+import { AuthNavActions } from "@/components/auth/nav-actions";
 import { cn } from "@/lib/cn";
 
 const NAV_LINKS = [
@@ -51,9 +51,7 @@ export default function Navbar() {
 
           <div className="hidden items-center gap-3 md:flex">
             <ThemeToggle />
-            <Button href="#escanear" size="sm">
-              Comenzar análisis
-            </Button>
+            <AuthNavActions />
           </div>
 
           <button
@@ -113,14 +111,7 @@ export default function Navbar() {
           </ul>
           <div className="flex flex-col gap-3 pb-5">
             <ThemeToggle className="w-full" />
-            <Button
-              href="#escanear"
-              size="sm"
-              className="w-full"
-              onClick={() => setOpen(false)}
-            >
-              Comenzar análisis
-            </Button>
+            <AuthNavActions className="flex-col items-stretch [&>a]:w-full [&>button]:w-full" />
           </div>
         </Container>
       </div>

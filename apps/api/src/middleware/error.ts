@@ -1,14 +1,16 @@
 import type { NextFunction, Request, Response } from "express";
 
 export function notFound(req: Request, res: Response) {
-  res.status(404).json({ error: { message: `Not Found - ${req.originalUrl}` } });
+  res
+    .status(404)
+    .json({ error: { message: `Not Found - ${req.originalUrl}` } });
 }
 
 export function errorHandler(
   err: Error,
   _req: Request,
   res: Response,
-  _next: NextFunction
+  _next: NextFunction,
 ) {
   const status = (err as Error & { status?: number }).status || 500;
   const message =
