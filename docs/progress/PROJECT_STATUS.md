@@ -103,9 +103,10 @@ Nada.
 
 ## Database status
 
-- Neon conectado: migración `20260814155613_init` + seed aplicados. Datos demo:
-  `demo@devpilot.app` / `devpilot123`, 3 proyectos, 1 análisis (health 78), 4 issues OPEN,
-  3 recomendaciones, 3 generated tests, 3 actividades.
+- Neon conectado: migración `20260814155613_init` aplicada. El seed es **opcional y
+  controlado por entorno**: crea el usuario demo solo si `SEED_DEMO_EMAIL`/`SEED_DEMO_PASSWORD`
+  están definidas (`.env` gitignored). Por decisión de seguridad (F-01 de la auditoría) se
+  **eliminaron de producción** los usuarios demo y sus datos (sin credenciales en el repo).
 
 ## Backend status
 

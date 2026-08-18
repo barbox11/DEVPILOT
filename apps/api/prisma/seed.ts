@@ -5,13 +5,23 @@ import bcrypt from "bcryptjs";
 const prisma = new PrismaClient();
 
 async function main() {
-  const passwordHash = await bcrypt.hash("devpilot123", 12);
+  const demoEmail = process.env.SEED_DEMO_EMAIL;
+  const demoPassword = process.env.SEED_DEMO_PASSWORD;
+
+  if (!demoEmail || !demoPassword) {
+    console.log(
+      "Seed: SEED_DEMO_EMAIL/SEED_DEMO_PASSWORD no definidas; se omite la creacion del usuario demo.",
+    );
+    return;
+  }
+
+  const passwordHash = await bcrypt.hash(demoPassword, 12);
 
   const user = await prisma.user.upsert({
-    where: { email: "demo@devpilot.app" },
+    where: { email: demoEmail },
     update: {},
     create: {
-      email: "demo@devpilot.app",
+      email: demoEmail,
       name: "Demo DevPilot",
       role: "OWNER",
       passwordHash,
@@ -119,7 +129,7 @@ async function main() {
             recommendation:
               "Centraliza la extracción del mensaje de error y añade el status HTTP al detalle.",
             suggestedFix:
-              "const mensaje = res.headers.get('content-type')?.includes('application/json')\n  ? (await res.json()).error?.message\n  : \`HTTP ${res.status}\`;",
+              "const mensaje = res.headers.get('content-type')?.includes('application/json')\n  ? (await res.json()).error?.message\n  : `HTTP ${res.status}`;",
             status: "OPEN",
           },
         ],
@@ -226,9 +236,6 @@ async function main() {
   };
 
   console.log("Seed completado:", counts);
-  console.log(
-    "Usuario demo: demo@devpilot.app / devpilot123 (email y contraseña para login)",
-  );
 }
 
 main()

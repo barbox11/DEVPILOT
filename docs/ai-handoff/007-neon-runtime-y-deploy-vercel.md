@@ -24,7 +24,7 @@ inactividad falla hasta que el compute despierta (reintentar resuelve). `node pr
 y `tsx` plano conectaban porque el compute ya estaba activo en ese momento.
 
 Validado en dev (`localhost:4000`):
-- `POST /api/auth/login` demo@devpilot.app / devpilot123 → `{ user, token }`.
+- `POST /api/auth/login` (usuario demo del seed) → `{ user, token }`.
 - `GET /api/overview` → `{projects:3, completedAnalyses:1, openIssues:4, recommendations:3, avgHealth:78}`.
 - Detalle proyecto `web-app` → 1 análisis, 4 issues, 3 recomendaciones.
 - `GET /api/recommendations` → 3, con `issue` vinculado (flujo IA contextual).
@@ -93,7 +93,8 @@ Validado en producción:
 
 ## Instrucciones para la próxima sesión
 
-1. Validar el dashboard en navegador con `demo@devpilot.app` / `devpilot123` contra
+1. Validar el dashboard en navegador con el usuario demo del seed (credenciales configuradas
+   vía `SEED_DEMO_EMAIL`/`SEED_DEMO_PASSWORD`, nunca en el repo) contra
    https://devpilot-web-bay.vercel.app (overview → detalle → AI review → issues).
 2. Seguir el roadmap: Playwright E2E, tests de integración, Graphify, `docs/api`.
 3. Toda la metodología, UI, mensajes, commits y docs en español.

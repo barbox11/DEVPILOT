@@ -36,7 +36,12 @@ Commit `e070fbb` — "feat: pulir UI/UX del dashboard (detalle real, IA contextu
 Commit `067a3b6` — "feat: conectar Neon y sembrar datos de prueba (migración init + seed)".
 
 - **`prisma migrate dev --name init`** aplicado a Neon (directa). Migración `20260814155613_init` creada. Verificado con `prisma migrate dev` (el CLI SÍ conecta usando `DATABASE_URL_UNPOOLED`).
-- **`prisma/seed.ts`** (`npm run prisma:seed` → `tsx prisma/seed.ts`): crea usuario demo `demo@devpilot.app` / `devpilot123`, 3 proyectos (`web-app`, `api-gateway`, `legacy-crm`), 1 análisis COMPLETED (health 78, quality 82, security 71, testing 64, architecture 88), 4 issues (CRITICAL/HIGH/MEDIUM/LOW con `suggestedFix`), 3 recomendaciones (2 vinculadas a issues), 3 generated tests, 3 actividades.
+- **`prisma/seed.ts`** (`npm run prisma:seed` → `tsx prisma/seed.ts`): crea el usuario demo
+  SOLO si `SEED_DEMO_EMAIL`/`SEED_DEMO_PASSWORD` están definidas en el entorno (gitignored;
+  sin credenciales en el repo), y siembra 3 proyectos (`web-app`, `api-gateway`,
+  `legacy-crm`), 1 análisis COMPLETED (health 78, quality 82, security 71, testing 64,
+  architecture 88), 4 issues (CRITICAL/HIGH/MEDIUM/LOW con `suggestedFix`), 3
+  recomendaciones (2 vinculadas a issues), 3 generated tests, 3 actividades.
 - **`package.json` (api)**: script `prisma:seed` + bloque `prisma.seed`. Migración y seed pusheados.
 - Resultado del seed verificado en Neon: `user:1, projects:3, analyses:1, issues:4, recommendations:3, generatedTests:3, activity:3`.
 
@@ -53,7 +58,9 @@ Commit `067a3b6` — "feat: conectar Neon y sembrar datos de prueba (migración 
 - **Próximo paso sugerido**:
   1. Matar TODOS los procesos node.
   2. Confirmar `apps/api/.env` = `DATABASE_URL` directa (host `ep-old-king-axeiw8iq.c-4.us-east-2.aws.neon.tech/barbox11` con `?sslmode=require`, SIN `channel_binding`, SIN `-pooler`).
-  3. Arrancar `npm run dev`, esperar "listening", y llamar `POST /api/auth/login` con `demo@devpilot.app` / `devpilot123` → debe devolver `{ session: { token } }`.
+  3. Arrancar `npm run dev`, esperar "listening", y llamar `POST /api/auth/login` con las
+      credenciales del usuario demo (definidas por env en el seed) → debe devolver
+      `{ session: { token } }`.
   4. Con el token, `GET /api/overview` → debe devolver `projects=3, openIssues=4, recommendations=3, avgHealth=78`.
   5. Si sigue fallando, probar setear `DATABASE_URL_UNPOOLED` como URL de runtime o investigar `channel_binding`/firewall/shadows. Confirmar también `CORS_ORIGIN=http://localhost:3000`.
 - **Nota**: la URL directa que funcionó en CLI usó `?sslmode=require`. El pooler (`-pooler`) conecta a TCP 5432 pero el query engine de Prisma no lo alcanza; usar la directa.

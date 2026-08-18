@@ -79,7 +79,7 @@ Migrations: `npm run prisma:migrate` desde `apps/api` contra la rama correspondi
 
 ## Status
 
-Producción funcionando: login demo, overview (3 proyectos / 4 issues / 3 recomendaciones /
-health 78), detalle de proyecto y AI review validados contra `devpilot-api.vercel.app` con
-CORS desde `devpilot-web-bay.vercel.app`. Pendiente: CI/CD automático, preview branches y
-dominio custom.
+Producción validada (login demo, overview 3/4/3/78, detalle, AI review, CORS) y luego, por
+decisión de seguridad, se **eliminaron los usuarios demo de la Neon de producción** y el seed
+quedó sin credenciales (opcional por entorno `SEED_DEMO_EMAIL`/`SEED_DEMO_PASSWORD`).
+Pendiente: CI/CD automático, preview branches y dominio custom.
