@@ -27,7 +27,7 @@ export function DashboardShell({
 
   useEffect(() => {
     if (!loading && !isAuthenticated) {
-      router.replace("/login");
+      router.replace("/auth/login");
     }
   }, [loading, isAuthenticated, router]);
 

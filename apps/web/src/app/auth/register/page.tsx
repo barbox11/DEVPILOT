@@ -34,7 +34,7 @@ export default function RegisterPage() {
         <>
           ¿Ya tienes cuenta?{" "}
           <Link
-            href="/login"
+            href="/auth/login"
             className="font-medium text-accent-pass-strong underline underline-offset-4 hover:text-accent-pass"
           >
             Inicia sesión

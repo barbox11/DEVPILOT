@@ -45,7 +45,7 @@ export function AuthNavActions({ className = "" }: { className?: string }) {
 
   return (
     <Link
-      href="/login"
+      href="/auth/login"
       className="inline-flex min-h-[44px] cursor-pointer items-center justify-center rounded-md border border-border bg-surface px-4 py-2 font-mono text-xs font-medium uppercase tracking-[0.2em] text-text transition-colors duration-200 hover:border-ink/40"
     >
       Iniciar sesión

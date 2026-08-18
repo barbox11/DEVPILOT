@@ -11,7 +11,7 @@ export default function SettingsPage() {
 
   async function handleLogout() {
     await logout();
-    router.replace("/login");
+    router.replace("/auth/login");
   }
 
   return (

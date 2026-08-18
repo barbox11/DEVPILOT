@@ -29,7 +29,7 @@ export default function LoginPage() {
         <>
           ¿No tienes cuenta?{" "}
           <Link
-            href="/register"
+            href="/auth/register"
             className="font-medium text-accent-pass-strong underline underline-offset-4 hover:text-accent-pass"
           >
             Regístrate
