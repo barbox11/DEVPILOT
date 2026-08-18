@@ -1,6 +1,8 @@
 export const API_BASE_URL =
   process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:4000";
 
+const API_ENDPOINT = `${API_BASE_URL}/api`;
+
 export const TOKEN_KEY = "devpilot-token";
 
 export function getToken(): string | null {
@@ -41,7 +43,7 @@ export async function api<T>(
 
   let res: Response;
   try {
-    res = await fetch(`${API_BASE_URL}${path}`, {
+    res = await fetch(`${API_ENDPOINT}${path}`, {
       ...rest,
       headers: requestHeaders,
     });
