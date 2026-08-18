@@ -79,7 +79,7 @@ export default function AiReviewPage() {
                     <div className="mt-4 space-y-3">
                       <div className="rounded-md border border-border bg-background px-4 py-3">
                         <p className="font-mono text-[11px] uppercase tracking-[0.2em] text-text-muted">
-                          El issue
+                          El hallazgo
                         </p>
                         <div className="mt-2 flex flex-wrap items-center gap-2">
                           <span

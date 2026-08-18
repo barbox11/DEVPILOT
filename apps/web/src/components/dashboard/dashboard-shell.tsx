@@ -7,15 +7,15 @@ import { cn } from "@/lib/cn";
 import { useAuth } from "@/lib/auth";
 
 const NAV = [
-  { href: "/dashboard", label: "Overview" },
-  { href: "/dashboard/projects", label: "Projects" },
-  { href: "/dashboard/issues", label: "Issues" },
-  { href: "/dashboard/security", label: "Security" },
-  { href: "/dashboard/testing", label: "Testing" },
-  { href: "/dashboard/architecture", label: "Architecture" },
-  { href: "/dashboard/ai-review", label: "AI Review" },
-  { href: "/dashboard/activity", label: "Activity" },
-  { href: "/dashboard/settings", label: "Settings" },
+  { href: "/dashboard", label: "Visión general" },
+  { href: "/dashboard/projects", label: "Proyectos" },
+  { href: "/dashboard/issues", label: "Hallazgos" },
+  { href: "/dashboard/security", label: "Seguridad" },
+  { href: "/dashboard/testing", label: "Pruebas" },
+  { href: "/dashboard/architecture", label: "Arquitectura" },
+  { href: "/dashboard/ai-review", label: "Revisión IA" },
+  { href: "/dashboard/activity", label: "Actividad" },
+  { href: "/dashboard/settings", label: "Configuración" },
 ];
 
 export function DashboardShell({
@@ -58,13 +58,19 @@ export function DashboardShell({
       ) : (
         <>
           <aside className="fixed inset-y-0 left-0 z-40 hidden w-64 border-r border-border bg-surface-2 md:block">
-            <div className="flex h-16 items-center gap-2.5 border-b border-border px-5">
-              <span className="grid h-8 w-8 place-items-center rounded-sm bg-ink font-mono text-sm font-bold text-on-ink">
-                DP
-              </span>
-              <span className="font-mono text-base font-semibold tracking-tight">
-                DevPilot
-              </span>
+            <div className="flex h-16 items-center border-b border-border px-5">
+              <Link
+                href="/"
+                aria-label="Ir a la página de inicio de DevPilot"
+                className="flex items-center gap-2.5"
+              >
+                <span className="grid h-8 w-8 place-items-center rounded-sm bg-ink font-mono text-sm font-bold text-on-ink">
+                  DP
+                </span>
+                <span className="font-mono text-base font-semibold tracking-tight">
+                  DevPilot
+                </span>
+              </Link>
             </div>
             <nav aria-label="Panel de control" className="p-3">
               <ul className="space-y-1">
@@ -97,15 +103,31 @@ export function DashboardShell({
                 <p className="font-mono text-xs uppercase tracking-[0.2em] text-text-muted">
                   instrumento · panel
                 </p>
-                <span className="font-mono text-xs uppercase tracking-[0.2em] text-text-muted">
-                  devpilot
-                </span>
+                <div className="flex items-center gap-4">
+                  <Link
+                    href="/"
+                    className="font-mono text-xs uppercase tracking-[0.2em] text-text-muted transition-colors duration-200 hover:text-text"
+                  >
+                    ← Inicio
+                  </Link>
+                  <span className="font-mono text-xs uppercase tracking-[0.2em] text-text-muted">
+                    devpilot
+                  </span>
+                </div>
               </div>
               <nav
                 aria-label="Secciones del panel"
                 className="overflow-x-auto border-t border-border md:hidden"
               >
                 <ul className="flex gap-1 px-3 py-2">
+                  <li>
+                    <Link
+                      href="/"
+                      className="whitespace-nowrap rounded-sm px-2.5 py-1.5 font-mono text-[11px] uppercase tracking-[0.2em] text-text-muted transition-colors duration-200 hover:bg-surface hover:text-text"
+                    >
+                      Inicio
+                    </Link>
+                  </li>
                   {NAV.map((item) => {
                     const active = pathname === item.href;
                     return (

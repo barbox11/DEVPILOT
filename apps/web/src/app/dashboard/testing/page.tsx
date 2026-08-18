@@ -7,7 +7,7 @@ export default function TestingPage() {
   return (
     <CategoryIssues
       eyebrow="TESTING"
-      title="Testing"
+      title="Pruebas"
       lead="Cobertura y pruebas generadas por análisis."
       category="TESTING"
       emptyTitle="Sin análisis de testing"

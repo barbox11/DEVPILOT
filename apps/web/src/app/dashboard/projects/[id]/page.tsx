@@ -6,11 +6,11 @@ import { useProject } from "@/lib/queries";
 import { cn } from "@/lib/cn";
 
 const METRICS = [
-  { label: "HEALTH SCORE", key: "healthScore" as const, chip: "bg-accent-pass-soft text-accent-pass-strong" },
-  { label: "CODE QUALITY", key: "qualityScore" as const, chip: "bg-accent-pass-soft text-accent-pass-strong" },
-  { label: "SECURITY", key: "securityScore" as const, chip: "bg-accent-finding-soft text-accent-finding-strong" },
-  { label: "TESTING", key: "testingScore" as const, chip: "bg-accent-finding-soft text-accent-finding-strong" },
-  { label: "ARCHITECTURE", key: "architectureScore" as const, chip: "bg-accent-pass-soft text-accent-pass-strong" },
+  { label: "SALUD", key: "healthScore" as const, chip: "bg-accent-pass-soft text-accent-pass-strong" },
+  { label: "CALIDAD", key: "qualityScore" as const, chip: "bg-accent-pass-soft text-accent-pass-strong" },
+  { label: "SEGURIDAD", key: "securityScore" as const, chip: "bg-accent-finding-soft text-accent-finding-strong" },
+  { label: "PRUEBAS", key: "testingScore" as const, chip: "bg-accent-finding-soft text-accent-finding-strong" },
+  { label: "ARQUITECTURA", key: "architectureScore" as const, chip: "bg-accent-pass-soft text-accent-pass-strong" },
 ];
 
 const SEVERITY_CHIP: Record<string, string> = {

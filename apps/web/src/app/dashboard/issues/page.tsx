@@ -34,7 +34,7 @@ export default function IssuesPage() {
     <div className="mx-auto max-w-6xl">
       <PageHeader
         eyebrow="HALLAZGOS"
-        title="Issues"
+        title="Hallazgos"
         lead="Todos los hallazgos por severidad: errores, calidad y testing."
       />
       <div className="mt-8">

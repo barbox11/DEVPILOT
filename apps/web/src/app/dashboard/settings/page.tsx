@@ -9,6 +9,11 @@ export default function SettingsPage() {
   const { user, logout } = useAuth();
   const router = useRouter();
 
+  const roleLabel: Record<string, string> = {
+    OWNER: "PROPIETARIO",
+    MEMBER: "MIEMBRO",
+  };
+
   async function handleLogout() {
     await logout();
     router.replace("/auth/login");
@@ -42,7 +47,9 @@ export default function SettingsPage() {
             <dt className="font-mono text-xs uppercase tracking-[0.2em] text-text-muted">
               Rol
             </dt>
-            <dd className="mt-1 font-mono text-sm">{user?.role ?? "—"}</dd>
+            <dd className="mt-1 font-mono text-sm">
+              {user?.role ? (roleLabel[user.role] ?? user.role) : "—"}
+            </dd>
           </div>
         </dl>
         <div className="mt-6">
