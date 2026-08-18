@@ -1,43 +1,71 @@
 # DevPilot — Deployment
 
-## Target platform
+## Target platform (real)
 
-| Layer | Platform |
-|---|---|
-| Frontend (apps/web) | Vercel |
-| Backend (apps/api) | Vercel (serverless-compatible Express) |
-| Database | Neon PostgreSQL |
+| Layer | Platform | URL |
+|---|---|---|
+| Frontend (apps/web) | Vercel (Next.js 15) | https://devpilot-web-bay.vercel.app |
+| Backend (apps/api) | Vercel (Express serverless, preset Express) | https://devpilot-api.vercel.app |
+| Database | Neon PostgreSQL (rama main) | URL directa en `apps/api/.env` (gitignored) |
 
-## Deployment flow
+> **Nota de URL**: el nombre `devpilot-web.vercel.app` ya estaba ocupado; Vercel asignó
+> `devpilot-web-bay.vercel.app`. `CORS_ORIGIN` en el API y `NEXT_PUBLIC_API_URL` en el web
+> apuntan a los dominios reales.
 
-```
-LOCAL  ──►  TEST  ──►  GIT  ──►  GITHUB  ──►  CI  ──►  VERCEL PREVIEW  ──►  QA  ──►  PRODUCTION
-```
+## Cómo se desplegó
+
+Dos proyectos Vercel independientes bajo la org `barbox` (cuenta `barbox11`):
+
+1. **API** (`barbox/devpilot-api`): preset **Express**, `rootDirectory` = `apps/api`.
+   - Vercel detecta la app Express automáticamente desde `src/app.ts` y genera una función
+     Node que sirve **todas** las rutas (`/(.*) -> /`). El `api/index.ts` que se intentó
+     agregar provocaba que Vercel reservara el namespace `/api/*` con 404 y se eliminó
+     (el preset Express no lo necesita).
+   - `vercel.json` en `apps/api` fija `buildCommand: npx prisma generate` (genera el client
+     antes de empaquetar la función).
+   - Env producción: `DATABASE_URL` (directa, `?sslmode=require`, sin pooler ni
+     `channel_binding`) y `CORS_ORIGIN` = URL del web.
+2. **Web** (`barbox/devpilot-web`): preset **Next.js**, `rootDirectory` = `apps/web`.
+   - Env producción: `NEXT_PUBLIC_API_URL` = https://devpilot-api.vercel.app (se hornea en
+     el bundle en build time).
+
+Despliegues: `vercel link --project <nombre> --yes` y `vercel deploy --prod --yes` desde
+cada app. Los archivos `.vercel/project.json`, `.env.local` y `auth.json` del CLI quedan
+gitignored (no subir credenciales).
+
+## Backend on Vercel — decisión
+
+- La API Express es stateless y REST: se sirve como función serverless de Node (preset
+  Express de Vercel), lo que cumple el plan de `DEPLOYMENT.md`.
+- **No usar el directorio `api/`**: Vercel reserva `/api/*` para funciones por archivo y
+  genera un 404 de plataforma para el resto, pisando la app Express montada en `/api`.
+- Prisma: se usa la URL **directa** de Neon (la pooled con `channel_binding` no la alcanza
+  el query engine; ver ai-handoff 006). En serverless el client se genera en build
+  (`npx prisma generate`).
+- Si en el futuro se necesitan websockets/jobs largos, mover la API a un host Node dedicado.
 
 ## Environments
 
-Vercel environments and their variables:
+Cada proyecto tiene variables por entorno (production usado; preview/development opcionales):
 
-| Environment | Trigger | Purpose |
+| Variable | Proyecto | Valor (producción) |
 |---|---|---|
-| Development | push / feature branch | local dev + feature verification |
-| Preview | pull request | QA before merge |
-| Production | merge to `main` | live SaaS |
+| `DATABASE_URL` | api | URL directa Neon (gitignored) |
+| `CORS_ORIGIN` | api | https://devpilot-web-bay.vercel.app (soporta lista separada por comas) |
+| `NEXT_PUBLIC_API_URL` | web | https://devpilot-api.vercel.app |
 
-Every environment has its own variables (identical keys, different values):
+## Flujo de despliegue
 
-- `DATABASE_URL` / `DATABASE_URL_UNPOOLED` → corresponding Neon branch
-- `NEXT_PUBLIC_API_URL` → API origin for the frontend
-- `CORS_ORIGIN` → allowed web origin for the API
-- `PORT` → provided by Vercel at runtime
+```
+LOCAL -> TEST -> GIT -> GITHUB -> VERCEL (deploy manual desde CLI o CI)
+```
 
-## Backend on Vercel — decision
+Para un nuevo deploy:
 
-The Express API is lightweight (no long-lived sockets, stateless). Before enabling Vercel Functions:
-
-1. Verify serverless compatibility (each request is a fresh function invocation).
-2. Prisma: use pooled `DATABASE_URL` (PgBouncer/Neon pooler) and generate the client at build time.
-3. If a persistent server is ever required (websockets, long jobs), do NOT force Vercel — propose an alternative (e.g. a dedicated Node host) per the architecture-first rule.
+```bash
+cd apps/api && vercel deploy --prod --yes
+cd apps/web && vercel deploy --prod --yes
+```
 
 ## Database branches (Neon)
 
@@ -45,16 +73,13 @@ The Express API is lightweight (no long-lived sockets, stateless). Before enabli
 |---|---|
 | development | `dev` |
 | testing | `test` |
-| production | `main` |
+| production | `main` (usada hoy; rama por defecto del proyecto) |
 
-Migrations: `prisma migrate` runs against each branch in CI before/after deploy.
-
-## Required credentials (requested at deploy time — not invented)
-
-- NEON: `DATABASE_URL`, `DATABASE_URL_UNPOOLED` (+ optionally project branch ids)
-- VERCEL: Project ID, Organization ID, access token
-- GITHUB: repository + remote, and token if the tooling requires it
+Migrations: `npm run prisma:migrate` desde `apps/api` contra la rama correspondiente.
 
 ## Status
 
-Not configured yet (Phase 1 scaffold). This document is the plan.
+Producción funcionando: login demo, overview (3 proyectos / 4 issues / 3 recomendaciones /
+health 78), detalle de proyecto y AI review validados contra `devpilot-api.vercel.app` con
+CORS desde `devpilot-web-bay.vercel.app`. Pendiente: CI/CD automático, preview branches y
+dominio custom.

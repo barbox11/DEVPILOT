@@ -120,7 +120,7 @@ async function main() {
               "Centraliza la extracción del mensaje de error y añade el status HTTP al detalle.",
             suggestedFix:
               "const mensaje = res.headers.get('content-type')?.includes('application/json')\n  ? (await res.json()).error?.message\n  : \`HTTP ${res.status}\`;",
-            status: "ACCEPTED",
+            status: "OPEN",
           },
         ],
       },

@@ -5,7 +5,16 @@ import router from "./routes/index.js";
 
 const app = express();
 
-app.use(cors({ origin: process.env.CORS_ORIGIN || "http://localhost:3000" }));
+const allowedOrigins = (process.env.CORS_ORIGIN || "http://localhost:3000")
+  .split(",")
+  .map((origin) => origin.trim())
+  .filter(Boolean);
+
+app.use(
+  cors({
+    origin: allowedOrigins.length === 1 ? allowedOrigins[0] : allowedOrigins,
+  }),
+);
 app.use(express.json());
 
 app.use("/api", router);
